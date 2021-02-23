@@ -124,7 +124,7 @@ MonoBehaviour:
   tileRenderer: {fileID: 3037546147913419691}
   meshFilter: {fileID: 3037546147913419690}
   meshCollider: {fileID: 3037546147913419688}
-  mapScale: 3
+  mapScale: 5
   terrainTypes:
   - name: water
     height: 0.4
@@ -135,7 +135,7 @@ MonoBehaviour:
   - name: hill
     height: 1
     colour: {r: 0.6509434, g: 0.28448638, b: 0, a: 0}
-  heightMultiplier: 1
+  heightMultiplier: 3
   heightCurve:
     serializedVersion: 2
     m_Curve:
@@ -169,3 +169,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  waves:
+  - seed: 5671
+    frequency: 1
+    amplitude: 1
+  - seed: 7863
+    frequency: 0.5
+    amplitude: 2
+  - seed: 4238
+    frequency: 0.25
+    amplitude: 4

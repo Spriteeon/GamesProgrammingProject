@@ -5,7 +5,7 @@ using UnityEngine;
 public class NoiseMapGeneration : MonoBehaviour
 {
 
-	public float[,] GenerateNoiseMap(int mapDepth, int mapWidth, float scale, float offsetX, float offsetZ)
+	public float[,] GenerateNoiseMap(int mapDepth, int mapWidth, float scale, float offsetX, float offsetZ, Wave[] waves)
 	{
 		// create an empty noise map with the mapDepth and mapWidth coordinates
 		float[,] noiseMap = new float[mapDepth, mapWidth];
@@ -18,8 +18,19 @@ public class NoiseMapGeneration : MonoBehaviour
 				float sampleX = (x + offsetX) / scale;
 				float sampleZ = (z + offsetZ) / scale;
 
+				float noise = 0f;
+				float normalization = 0f;
+				foreach (Wave wave in waves)
+				{
+					// generate noise value using PerlinNoise for a given Wave
+					noise += wave.amplitude * Mathf.PerlinNoise(sampleX * wave.frequency + wave.seed, sampleZ * wave.frequency + wave.seed);
+					normalization += wave.amplitude;
+				}
+				// normalize the noise value so that it is within 0 and 1
+				noise /= normalization;
+
 				// generate noise value using PerlinNoise
-				float noise = Mathf.PerlinNoise(sampleX, sampleZ);
+				//float noise = Mathf.PerlinNoise(sampleX, sampleZ);
 
 				noiseMap[z, x] = noise;
 			}
@@ -27,4 +38,12 @@ public class NoiseMapGeneration : MonoBehaviour
 
 		return noiseMap;
 	}
+}
+
+[System.Serializable]
+public class Wave
+{
+	public float seed;
+	public float frequency;
+	public float amplitude;
 }
