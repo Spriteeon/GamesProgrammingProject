@@ -32,12 +32,12 @@ public class TileGeneration : MonoBehaviour
 	[SerializeField]
 	private Wave[] waves;
 
-	void Start()
-	{
-		GenerateTile();
-	}
+	//void Start()
+	//{
+	//	GenerateTile();
+	//}
 
-	void GenerateTile()
+	public TileData GenerateTile(float centerVertexZ, float maxDistanceZ)
 	{
 		// calculate tile depth and width based on the mesh vertices
 		Vector3[] meshVertices = this.meshFilter.mesh.vertices;
@@ -49,7 +49,9 @@ public class TileGeneration : MonoBehaviour
 		float offsetZ = -this.gameObject.transform.position.z;
 
 		// calculate the offsets based on the tile position
-		float[,] heightMap = this.noiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, waves);
+		float[,] heightMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, waves);
+
+		TerrainType[,] heightTerrainTypes = new TerrainType[tileDepth, tileWidth];
 
 		// generate a heightMap using noise
 		Texture2D tileTexture = BuildTexture(heightMap);
@@ -58,6 +60,8 @@ public class TileGeneration : MonoBehaviour
 		// update the tile mesh vertices according to the height map
 		UpdateMeshVertices(heightMap);
 
+		TileData tileData = new TileData(heightMap, heightTerrainTypes, this.meshFilter.mesh);
+		return tileData;
 	}
 
 	private Texture2D BuildTexture(float[,] heightMap)
@@ -146,4 +150,19 @@ public class TerrainType
 	public string name;
 	public float height;
 	public Color colour;
+}
+
+// Class to store all the Data of a Tile
+public class TileData
+{
+	public float[,] heightMap;
+	public TerrainType[,] heightTerrainTypes;
+	public Mesh mesh;
+
+	public TileData(float[,] heightMap, TerrainType[,] heightTerrainTypes, Mesh mesh)
+	{
+		this.heightMap = heightMap;
+		this.heightTerrainTypes = heightTerrainTypes;
+		this.mesh = mesh;
+	}
 }

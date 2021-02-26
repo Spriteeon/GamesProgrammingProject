@@ -5,7 +5,7 @@ using UnityEngine;
 public class NoiseMapGeneration : MonoBehaviour
 {
 
-	public float[,] GenerateNoiseMap(int mapDepth, int mapWidth, float scale, float offsetX, float offsetZ, Wave[] waves)
+	public float[,] GeneratePerlinNoiseMap(int mapDepth, int mapWidth, float scale, float offsetX, float offsetZ, Wave[] waves)
 	{
 		// create an empty noise map with the mapDepth and mapWidth coordinates
 		float[,] noiseMap = new float[mapDepth, mapWidth];
