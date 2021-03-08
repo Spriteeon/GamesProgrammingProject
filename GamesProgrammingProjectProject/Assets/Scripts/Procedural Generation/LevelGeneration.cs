@@ -13,6 +13,9 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField]
 	private float centerVertexZ, maxDistanceZ;
 
+	[SerializeField]
+	private TreeGeneration treeGeneration;
+
 	void Start()
 	{
 		GenerateMap();
@@ -29,6 +32,8 @@ public class LevelGeneration : MonoBehaviour
 		Vector3[] tileMeshVertices = tilePrefab.GetComponent<MeshFilter>().sharedMesh.vertices;
 		int tileDepthVert = (int)Mathf.Sqrt(tileMeshVertices.Length);
 		int tileWidthVert = tileDepthVert;
+
+		float distanceBetweenVertices = (float)tileDepth / (float)tileDepthVert;
 
 		// build an empty LevelData object, to be filled with the tiles to be generated
 		LevelData levelData = new LevelData(tileDepthVert, tileWidthVert, this.mapDepthInTiles, this.mapWidthInTiles);
@@ -50,6 +55,9 @@ public class LevelGeneration : MonoBehaviour
 				levelData.AddTileData(tileData, zTile, xTile);
 			}
 		}
+
+		// generate trees for the level
+		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData);
 	}
 }
 
@@ -59,9 +67,9 @@ public class LevelData
 
 	public TileData[,] tilesData;
 
-	public LevelData(int tileDepthVert, int tileWidthVert, int levelDepthTiles, int levelWidthTiles)
+	public LevelData(int tileDepthVert, int tileWidthVert, int mapDepthInTiles, int mapWidthInTiles)
 	{
-		tilesData = new TileData[tileDepthVert * levelDepthTiles, tileWidthVert * levelWidthTiles];
+		tilesData = new TileData[tileDepthVert * mapDepthInTiles, tileWidthVert * mapWidthInTiles];
 
 		this.tileDepthVert = tileDepthVert;
 		this.tileWidthVert = tileWidthVert;

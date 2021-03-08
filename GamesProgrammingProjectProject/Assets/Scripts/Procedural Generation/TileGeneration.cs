@@ -54,7 +54,7 @@ public class TileGeneration : MonoBehaviour
 		TerrainType[,] heightTerrainTypes = new TerrainType[tileDepth, tileWidth];
 
 		// generate a heightMap using noise
-		Texture2D tileTexture = BuildTexture(heightMap);
+		Texture2D tileTexture = BuildTexture(heightMap, this.terrainTypes, heightTerrainTypes);
 		this.tileRenderer.material.mainTexture = tileTexture;
 
 		// update the tile mesh vertices according to the height map
@@ -64,7 +64,7 @@ public class TileGeneration : MonoBehaviour
 		return tileData;
 	}
 
-	private Texture2D BuildTexture(float[,] heightMap)
+	private Texture2D BuildTexture(float[,] heightMap, TerrainType[] terrainTypes, TerrainType[,] chosenTerrainTypes)
 	{
 		int tileDepth = heightMap.GetLength(0);
 		int tileWidth = heightMap.GetLength(1);
@@ -80,11 +80,13 @@ public class TileGeneration : MonoBehaviour
 				// assign as color a shade of grey proportional to the height value
 
 				// choose a terrain type according to the height value
-				TerrainType terrainType = ChooseTerrainType(height);
+				TerrainType terrainType = ChooseTerrainType(height, terrainTypes);
 				// assign the color according to the terrain type
 				colourMap[colourIndex] = terrainType.colour;
 
 				//colourMap[colourIndex] = Color.Lerp(Color.black, Color.white, height);
+				// save the chosen terrain type
+				chosenTerrainTypes[z, x] = terrainType;
 			}
 		}
 
@@ -97,7 +99,7 @@ public class TileGeneration : MonoBehaviour
 		return tileTexture;
 	}
 	
-	TerrainType ChooseTerrainType(float height)
+	TerrainType ChooseTerrainType(float height, TerrainType[] terrainTypes)
 	{
 		// for each terrain type, check if the height is lower than the one for the terrain type
 		foreach (TerrainType terrainType in terrainTypes)
@@ -150,6 +152,7 @@ public class TerrainType
 	public string name;
 	public float height;
 	public Color colour;
+	// public int index;
 }
 
 // Class to store all the Data of a Tile
