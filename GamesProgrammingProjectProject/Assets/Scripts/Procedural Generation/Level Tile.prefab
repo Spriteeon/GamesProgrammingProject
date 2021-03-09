@@ -135,7 +135,7 @@ MonoBehaviour:
   - name: high
     height: 1
     colour: {r: 0, g: 0, b: 0, a: 0}
-  heightMultiplier: 4
+  heightMultiplier: 5
   heightCurve:
     serializedVersion: 2
     m_Curve:
