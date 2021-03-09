@@ -369,7 +369,7 @@ MonoBehaviour:
   - seed: 6284
     frequency: 1.5
     amplitude: 1.5
-  levelScale: 15
+  levelScale: 10
   neighborRadius: 1
   treePrefab: {fileID: 9153226395671933284, guid: d8067ecd7d4315c4aada5608b42ed73b,
     type: 3}

@@ -82,7 +82,22 @@ public class TileGeneration : MonoBehaviour
 				// choose a terrain type according to the height value
 				TerrainType terrainType = ChooseTerrainType(height, terrainTypes);
 				// assign the color according to the terrain type
-				colourMap[colourIndex] = terrainType.colour;
+				//colourMap[colourIndex] = terrainType.colour;
+
+				switch(terrainType.name)
+				{
+					case "low":
+						colourMap[colourIndex] = terrainType.colour;
+						break;
+					case "medium":
+						colourMap[colourIndex] = terrainType.colour;
+						break;
+					case "high":
+						colourMap[colourIndex] = terrainType.colour;
+						break;
+					default:
+						break;
+				}
 
 				//colourMap[colourIndex] = Color.Lerp(Color.black, Color.white, height);
 				// save the chosen terrain type

@@ -127,7 +127,7 @@ MonoBehaviour:
   mapScale: 40
   terrainTypes:
   - name: low
-    height: 0.4
+    height: 0.3
     colour: {r: 1, g: 1, b: 1, a: 0}
   - name: medium
     height: 0.7
@@ -150,7 +150,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 0.40077144
-      value: 0.0032783896
+      value: 0.0056587607
       inSlope: 0.06016883
       outSlope: 0.06016883
       tangentMode: 0
