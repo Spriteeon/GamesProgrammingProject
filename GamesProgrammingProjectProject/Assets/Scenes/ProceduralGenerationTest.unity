@@ -317,8 +317,8 @@ MonoBehaviour:
   mapDepthInTiles: 40
   tilePrefab: {fileID: 3037546147913419695, guid: a653656763a1e2343b4a7cc1398296ac,
     type: 3}
-  centerVertexZ: 0
-  maxDistanceZ: 0
+  centerVertexZ: 205
+  maxDistanceZ: 205
   treeGeneration: {fileID: 2052644497}
 --- !u!4 &2052644495
 Transform:
@@ -367,8 +367,8 @@ MonoBehaviour:
     frequency: 2
     amplitude: 2
   - seed: 6284
-    frequency: 4
-    amplitude: 4
+    frequency: 1.5
+    amplitude: 1.5
   levelScale: 15
   neighborRadius: 1
   treePrefab: {fileID: 9153226395671933284, guid: d8067ecd7d4315c4aada5608b42ed73b,

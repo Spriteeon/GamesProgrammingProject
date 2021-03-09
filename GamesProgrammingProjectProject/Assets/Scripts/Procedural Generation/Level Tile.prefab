@@ -124,7 +124,7 @@ MonoBehaviour:
   tileRenderer: {fileID: 3037546147913419691}
   meshFilter: {fileID: 3037546147913419690}
   meshCollider: {fileID: 3037546147913419688}
-  mapScale: 15
+  mapScale: 40
   terrainTypes:
   - name: low
     height: 0.4
