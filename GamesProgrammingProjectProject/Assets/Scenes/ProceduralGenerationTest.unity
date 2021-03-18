@@ -371,5 +371,9 @@ MonoBehaviour:
     amplitude: 1.5
   levelScale: 10
   neighborRadius: 1
-  treePrefab: {fileID: 9153226395671933284, guid: d8067ecd7d4315c4aada5608b42ed73b,
+  treePrefab1: {fileID: 9153226395671933284, guid: d8067ecd7d4315c4aada5608b42ed73b,
+    type: 3}
+  treePrefab2: {fileID: 1000013237259888, guid: 81ed4e584e6c4894596fd0ac2c996d98,
+    type: 3}
+  treePrefab3: {fileID: 1303931366546006, guid: 2fe4db782f59f2845bd1bbf8ac6d9603,
     type: 3}

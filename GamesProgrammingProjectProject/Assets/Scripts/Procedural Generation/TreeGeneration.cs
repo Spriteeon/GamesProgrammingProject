@@ -17,6 +17,14 @@ public class TreeGeneration : MonoBehaviour
 	private float neighborRadius;
 
 	[SerializeField]
+	private GameObject treePrefab1;
+
+	[SerializeField]
+	private GameObject treePrefab2;
+
+	[SerializeField]
+	private GameObject treePrefab3;
+
 	private GameObject treePrefab;
 
 	public void GenerateTrees(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData)
@@ -73,8 +81,29 @@ public class TreeGeneration : MonoBehaviour
 					{
 						//Vector3 treePosition = new Vector3(x * distanceBetweenVertices, meshVertices[vertexIndex].y, z * distanceBetweenVertices);
 						Vector3 treePosition = new Vector3(x * distanceBetweenVertices, meshVertices[vertexIndex].y - 0.1f, z * distanceBetweenVertices);
+
+						// Pick a random tree Prefab
+						int randNum = Random.Range(1, 4);
+						switch(randNum)
+						{
+							case 1:
+								treePrefab = treePrefab1;
+								break;
+							case 2:
+								treePrefab = treePrefab2;
+								break;
+							case 3:
+								treePrefab = treePrefab3;
+								break;
+							default:
+								break;
+						}
+
+						// Pick a random tree scale
+						float treeScale = Random.Range(2.0f, 3.0f);
+
 						GameObject tree = Instantiate(this.treePrefab, treePosition, Quaternion.identity) as GameObject;
-						tree.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+						tree.transform.localScale = new Vector3(treeScale, treeScale, treeScale);
 					}
 				}
 			}
