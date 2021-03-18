@@ -16,6 +16,9 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField]
 	private TreeGeneration treeGeneration;
 
+	[SerializeField]
+	private FoliageGeneration foliageGeneration;
+
 	void Start()
 	{
 		GenerateMap();
@@ -58,6 +61,10 @@ public class LevelGeneration : MonoBehaviour
 
 		// generate trees for the level
 		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData);
+
+		// generate foliage for the level
+		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData);
+
 	}
 }
 

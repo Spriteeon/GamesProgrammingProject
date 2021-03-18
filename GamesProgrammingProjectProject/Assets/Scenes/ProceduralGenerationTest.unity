@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 2052644495}
   - component: {fileID: 2052644494}
   - component: {fileID: 2052644497}
+  - component: {fileID: 2052644498}
   - component: {fileID: 2052644496}
   m_Layer: 0
   m_Name: Level
@@ -320,6 +321,7 @@ MonoBehaviour:
   centerVertexZ: 205
   maxDistanceZ: 205
   treeGeneration: {fileID: 2052644497}
+  foliageGeneration: {fileID: 2052644498}
 --- !u!4 &2052644495
 Transform:
   m_ObjectHideFlags: 0
@@ -377,3 +379,31 @@ MonoBehaviour:
     type: 3}
   treePrefab3: {fileID: 1303931366546006, guid: 2fe4db782f59f2845bd1bbf8ac6d9603,
     type: 3}
+--- !u!114 &2052644498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052644493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c1a1f46821d9f4db906074ece43a0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseMapGeneration: {fileID: 2052644496}
+  waves:
+  - seed: 5647
+    frequency: 1
+    amplitude: 1
+  - seed: 2985
+    frequency: 2
+    amplitude: 2
+  - seed: 8367
+    frequency: 4
+    amplitude: 4
+  levelScale: 2
+  neighborRadius: 1
+  foliagePrefab1: {fileID: 100000, guid: 7b1460807121f9c41b20dc1f4578fd8f, type: 3}
+  foliagePrefab2: {fileID: 100000, guid: cea115c45a612d4498f6e217d227ddc4, type: 3}
+  foliagePrefab3: {fileID: 100000, guid: 41dbe63909c99254baa0c6323eb510a1, type: 3}
