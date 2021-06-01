@@ -37,8 +37,19 @@ public class TileGeneration : MonoBehaviour
 	//	GenerateTile();
 	//}
 
+	Vector2[] uvs;
+	public Texture lowTexture, mediumTexture, highTexture;
+	Renderer renderer;
+
+	private Wave[] GenerateWaves()
+	{
+		return waves;
+	}
+
 	public TileData GenerateTile(float centerVertexZ, float maxDistanceZ)
 	{
+		renderer = this.gameObject.GetComponent<Renderer>();
+
 		// calculate tile depth and width based on the mesh vertices
 		Vector3[] meshVertices = this.meshFilter.mesh.vertices;
 		int tileDepth = (int)Mathf.Sqrt(meshVertices.Length);
@@ -49,13 +60,50 @@ public class TileGeneration : MonoBehaviour
 		float offsetZ = -this.gameObject.transform.position.z;
 
 		// calculate the offsets based on the tile position
-		float[,] heightMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, waves);
+		float[,] heightMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, GenerateWaves());
 
 		TerrainType[,] heightTerrainTypes = new TerrainType[tileDepth, tileWidth];
 
 		// generate a heightMap using noise
-		Texture2D tileTexture = BuildTexture(heightMap, this.terrainTypes, heightTerrainTypes);
-		this.tileRenderer.material.mainTexture = tileTexture;
+		//Texture2D tileTexture = BuildTexture(heightMap, this.terrainTypes, heightTerrainTypes);
+		//this.tileRenderer.material.mainTexture = tileTexture;
+
+		// Terrain Texture
+		for (int z = 0; z < tileDepth; z++)
+		{
+			for (int x = 0; x < tileWidth; x++)
+			{
+
+				float height = heightMap[z, x];
+				TerrainType terrainType = ChooseTerrainType(height, this.terrainTypes);
+				heightTerrainTypes[z, x] = terrainType;
+
+				switch (terrainType.name)
+				{
+					case "low":
+						renderer.material.SetTexture("_MainTex", lowTexture);
+						break;
+					case "medium":
+						renderer.material.SetTexture("_MainTex", mediumTexture);
+						break;
+					case "high":
+						renderer.material.SetTexture("_MainTex", highTexture);
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		uvs = new Vector2[meshVertices.Length];
+		for (int i = 0, z = 0; z < tileDepth; z++)
+		{
+			for (int x = 0; x < tileWidth; x++)
+			{
+				uvs[i] = new Vector2((float)x / tileWidth, (float)z / tileDepth);
+				i++;
+			}
+		}
 
 		// update the tile mesh vertices according to the height map
 		UpdateMeshVertices(heightMap);
@@ -64,55 +112,55 @@ public class TileGeneration : MonoBehaviour
 		return tileData;
 	}
 
-	private Texture2D BuildTexture(float[,] heightMap, TerrainType[] terrainTypes, TerrainType[,] chosenTerrainTypes)
-	{
-		int tileDepth = heightMap.GetLength(0);
-		int tileWidth = heightMap.GetLength(1);
+	//private Texture2D BuildTexture(float[,] heightMap, TerrainType[] terrainTypes, TerrainType[,] chosenTerrainTypes)
+	//{
+	//	int tileDepth = heightMap.GetLength(0);
+	//	int tileWidth = heightMap.GetLength(1);
 
-		Color[] colourMap = new Color[tileDepth * tileWidth];
-		for (int z = 0; z < tileDepth; z++)
-		{
-			for (int x = 0; x < tileWidth; x++)
-			{
-				// transform the 2D map index is an Array index
-				int colourIndex = z * tileWidth + x;
-				float height = heightMap[z, x];
-				// assign as color a shade of grey proportional to the height value
+	//	Color[] colourMap = new Color[tileDepth * tileWidth];
+	//	for (int z = 0; z < tileDepth; z++)
+	//	{
+	//		for (int x = 0; x < tileWidth; x++)
+	//		{
+	//			// transform the 2D map index is an Array index
+	//			int colourIndex = z * tileWidth + x;
+	//			float height = heightMap[z, x];
+	//			// assign as color a shade of grey proportional to the height value
 
-				// choose a terrain type according to the height value
-				TerrainType terrainType = ChooseTerrainType(height, terrainTypes);
-				// assign the color according to the terrain type
-				//colourMap[colourIndex] = terrainType.colour;
+	//			// choose a terrain type according to the height value
+	//			TerrainType terrainType = ChooseTerrainType(height, terrainTypes);
+	//			// assign the color according to the terrain type
+	//			//colourMap[colourIndex] = terrainType.colour;
 
-				switch(terrainType.name)
-				{
-					case "low":
-						colourMap[colourIndex] = terrainType.colour;
-						break;
-					case "medium":
-						colourMap[colourIndex] = terrainType.colour;
-						break;
-					case "high":
-						colourMap[colourIndex] = terrainType.colour;
-						break;
-					default:
-						break;
-				}
+	//			switch(terrainType.name)
+	//			{
+	//				case "low":
+	//					colourMap[colourIndex] = terrainType.colour;
+	//					break;
+	//				case "medium":
+	//					colourMap[colourIndex] = terrainType.colour;
+	//					break;
+	//				case "high":
+	//					colourMap[colourIndex] = terrainType.colour;
+	//					break;
+	//				default:
+	//					break;
+	//			}
 
-				//colourMap[colourIndex] = Color.Lerp(Color.black, Color.white, height);
-				// save the chosen terrain type
-				chosenTerrainTypes[z, x] = terrainType;
-			}
-		}
+	//			//colourMap[colourIndex] = Color.Lerp(Color.black, Color.white, height);
+	//			// save the chosen terrain type
+	//			chosenTerrainTypes[z, x] = terrainType;
+	//		}
+	//	}
 
-		// create a new texture and set its pixel colors
-		Texture2D tileTexture = new Texture2D(tileWidth, tileDepth);
-		tileTexture.wrapMode = TextureWrapMode.Clamp;
-		tileTexture.SetPixels(colourMap);
-		tileTexture.Apply();
+	//	// create a new texture and set its pixel colors
+	//	Texture2D tileTexture = new Texture2D(tileWidth, tileDepth);
+	//	tileTexture.wrapMode = TextureWrapMode.Clamp;
+	//	tileTexture.SetPixels(colourMap);
+	//	tileTexture.Apply();
 
-		return tileTexture;
-	}
+	//	return tileTexture;
+	//}
 	
 	TerrainType ChooseTerrainType(float height, TerrainType[] terrainTypes)
 	{
@@ -153,6 +201,7 @@ public class TileGeneration : MonoBehaviour
 
 		// update the vertices in the mesh and update its properties
 		this.meshFilter.mesh.vertices = meshVertices;
+		this.meshFilter.mesh.uv = uvs;
 		this.meshFilter.mesh.RecalculateBounds();
 		this.meshFilter.mesh.RecalculateNormals();
 		// update the mesh collider
