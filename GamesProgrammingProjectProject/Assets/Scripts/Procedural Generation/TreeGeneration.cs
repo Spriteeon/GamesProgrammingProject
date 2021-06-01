@@ -27,6 +27,10 @@ public class TreeGeneration : MonoBehaviour
 
 	private GameObject treePrefab;
 
+	RaycastHit hit;
+	float maxHeight = 20f;
+	Ray ray;
+
 	public void GenerateTrees(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData)
 	{
 		// generate a tree noise map using Perlin Noise
@@ -79,8 +83,36 @@ public class TreeGeneration : MonoBehaviour
 					// if the current tree noise value is the maximum one, place a tree in this location
 					if (treeValue == maxValue)
 					{
-						//Vector3 treePosition = new Vector3(x * distanceBetweenVertices, meshVertices[vertexIndex].y, z * distanceBetweenVertices);
-						Vector3 treePosition = new Vector3(x * distanceBetweenVertices, meshVertices[vertexIndex].y - 0.1f, z * distanceBetweenVertices);
+
+						float xPos = x * distanceBetweenVertices;
+						float zPos = z * distanceBetweenVertices;
+						float yPos = 0f;
+
+						//Ray ray = new Ray(new Vector3(xPos, maxHeight, zPos), Vector3.down);
+						//hit = new RaycastHit();
+						//if (tileData.plane.GetComponent<Collider>().Raycast(ray, out hit, 2.0f * maxHeight))
+						//{
+						//	Debug.Log("Hit point: " + hit.point);
+						//	Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.green, 5f);
+						//	yPos = hit.point.y;
+						//}
+						//else
+						//{
+						//	Debug.DrawRay(ray.origin, Vector3.down * 30f, Color.red, 5f);
+						//}
+
+						//Ray ray = new Ray(new Vector3(xPos, maxHeight, zPos), Vector3.down);
+						ray.origin = new Vector3(xPos, maxHeight, zPos);
+						ray.direction = Vector3.down;
+						hit = new RaycastHit();
+
+						if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
+						{
+							yPos = hit.point.y - 0.1f;
+						}
+
+						//Vector3 treePosition = new Vector3(xPos, meshVertices[vertexIndex].y - 0.1f, zPos);
+						Vector3 treePosition = new Vector3(xPos, yPos, zPos);
 
 						// Pick a random tree Prefab
 						int randNum = Random.Range(1, 4);

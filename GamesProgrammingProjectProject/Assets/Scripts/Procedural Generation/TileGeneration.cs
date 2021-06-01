@@ -60,7 +60,7 @@ public class TileGeneration : MonoBehaviour
 		// update the tile mesh vertices according to the height map
 		UpdateMeshVertices(heightMap);
 
-		TileData tileData = new TileData(heightMap, heightTerrainTypes, this.meshFilter.mesh);
+		TileData tileData = new TileData(heightMap, heightTerrainTypes, this.meshFilter.mesh, this.gameObject);
 		return tileData;
 	}
 
@@ -176,11 +176,13 @@ public class TileData
 	public float[,] heightMap;
 	public TerrainType[,] heightTerrainTypes;
 	public Mesh mesh;
+	public GameObject plane;
 
-	public TileData(float[,] heightMap, TerrainType[,] heightTerrainTypes, Mesh mesh)
+	public TileData(float[,] heightMap, TerrainType[,] heightTerrainTypes, Mesh mesh, GameObject plane)
 	{
 		this.heightMap = heightMap;
 		this.heightTerrainTypes = heightTerrainTypes;
 		this.mesh = mesh;
+		this.plane = plane;
 	}
 }

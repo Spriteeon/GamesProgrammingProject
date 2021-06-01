@@ -27,6 +27,10 @@ public class FoliageGeneration : MonoBehaviour
 
 	private GameObject foliagePrefab;
 
+	RaycastHit hit;
+	float maxHeight = 20f;
+	Ray ray;
+
 	public void GenerateFoliage(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData)
 	{
 		// generate a tree noise map using Perlin Noise
@@ -50,8 +54,8 @@ public class FoliageGeneration : MonoBehaviour
 
 				// get the terrain type of this coordinate
 				TerrainType terrainType = tileData.heightTerrainTypes[tileCoordinate.coordinateZ, tileCoordinate.coordinateX];
-				// check if it is a water terrain. Trees cannot be placed over the water
-				if (terrainType.name != "low")
+				// check if it is a low terrain
+				if (terrainType.name != "lowest") //Use low to clear clearings
 				{
 					float treeValue = treeMap[z, x];
 
@@ -79,8 +83,23 @@ public class FoliageGeneration : MonoBehaviour
 					// if the current tree noise value is the maximum one, place a tree in this location
 					if (treeValue == maxValue)
 					{
-						//Vector3 treePosition = new Vector3(x * distanceBetweenVertices, meshVertices[vertexIndex].y, z * distanceBetweenVertices);
-						Vector3 foliagePosition = new Vector3(x * distanceBetweenVertices, meshVertices[vertexIndex].y, z * distanceBetweenVertices);
+
+						float xPos = x * distanceBetweenVertices;
+						float zPos = z * distanceBetweenVertices;
+						float yPos = 0f;
+
+						//Ray ray = new Ray(new Vector3(xPos, maxHeight, zPos), Vector3.down);
+						ray.origin = new Vector3(xPos, maxHeight, zPos);
+						ray.direction = Vector3.down;
+						hit = new RaycastHit();
+
+						if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
+						{
+							yPos = hit.point.y - 0.1f;
+						}
+
+						//Vector3 foliagePosition = new Vector3(xPos, meshVertices[vertexIndex].y - 0.1f, zPos);
+						Vector3 foliagePosition = new Vector3(xPos, yPos, zPos);
 
 						// Pick a random tree Prefab
 						int randNum = Random.Range(1, 4);
