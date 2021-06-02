@@ -1213,7 +1213,17 @@ MonoBehaviour:
   maxDistanceZ: 205
   treeGeneration: {fileID: 2052644497}
   foliageGeneration: {fileID: 2052644498}
-  waves:
+  terrainWaves:
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  genericWaves:
   - seed: 0
     frequency: 0
     amplitude: 0
@@ -1262,16 +1272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseMapGeneration: {fileID: 2052644496}
-  waves:
-  - seed: 3587
-    frequency: 1
-    amplitude: 1
-  - seed: 7812
-    frequency: 2
-    amplitude: 2
-  - seed: 6284
-    frequency: 1.5
-    amplitude: 1.5
   levelScale: 10
   neighborRadius: 1
   treePrefab1: {fileID: 9153226395671933284, guid: d8067ecd7d4315c4aada5608b42ed73b,
@@ -1293,16 +1293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseMapGeneration: {fileID: 2052644496}
-  waves:
-  - seed: 5647
-    frequency: 1
-    amplitude: 1
-  - seed: 2985
-    frequency: 2
-    amplitude: 2
-  - seed: 8367
-    frequency: 4
-    amplitude: 4
   levelScale: 1.1
   neighborRadius: 1
   foliagePrefab1: {fileID: 100000, guid: 7b1460807121f9c41b20dc1f4578fd8f, type: 3}

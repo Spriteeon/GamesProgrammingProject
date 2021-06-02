@@ -7,8 +7,8 @@ public class FoliageGeneration : MonoBehaviour
 	[SerializeField]
 	private NoiseMapGeneration noiseMapGeneration;
 
-	[SerializeField]
-	private Wave[] waves;
+	//[SerializeField]
+	//private Wave[] waves;
 
 	[SerializeField]
 	private float levelScale;
@@ -31,10 +31,10 @@ public class FoliageGeneration : MonoBehaviour
 	float maxHeight = 20f;
 	Ray ray;
 
-	public void GenerateFoliage(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData)
+	public void GenerateFoliage(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData, Wave[] waves)
 	{
 		// generate a tree noise map using Perlin Noise
-		float[,] treeMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, this.waves);
+		float[,] treeMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, waves);
 
 		float levelSizeX = levelWidth * distanceBetweenVertices;
 		float levelSizeZ = levelDepth * distanceBetweenVertices;

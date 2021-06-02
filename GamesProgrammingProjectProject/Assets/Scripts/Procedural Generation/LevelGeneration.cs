@@ -20,7 +20,10 @@ public class LevelGeneration : MonoBehaviour
 	private FoliageGeneration foliageGeneration;
 
 	[SerializeField]
-	private Wave[] waves;
+	private Wave[] terrainWaves;
+
+	[SerializeField]
+	private Wave[] genericWaves;
 
 	void Start()
 	{
@@ -31,23 +34,31 @@ public class LevelGeneration : MonoBehaviour
 	private void GenerateTerrainWaves()
 	{
 		// Create random waves
-		waves[0].seed = GenerateWaveSeed();
-		waves[0].frequency = 1f;
-		waves[0].amplitude = 1f;
+		terrainWaves[0].seed = GenerateWaveSeed();
+		terrainWaves[0].frequency = 1f;
+		terrainWaves[0].amplitude = 1f;
 
-		waves[1].seed = GenerateWaveSeed();
-		waves[1].frequency = 0.5f;
-		waves[1].amplitude = 2f;
+		terrainWaves[1].seed = GenerateWaveSeed();
+		terrainWaves[1].frequency = 0.5f;
+		terrainWaves[1].amplitude = 2f;
 
-		waves[2].seed = GenerateWaveSeed();
-		waves[2].frequency = 0.5f;
-		waves[2].amplitude = 4f;
+		terrainWaves[2].seed = GenerateWaveSeed();
+		terrainWaves[2].frequency = 0.5f;
+		terrainWaves[2].amplitude = 4f;
 	}
 
-	private float GenerateWaveSeed()
+	private Wave[] GenerateGenericWaves()
 	{
-		float seed = Random.Range(0f, 9999f);
-		return seed;
+		// Create random waves for Trees and Terrain
+		//genericWaves = new Wave[3];
+		foreach (Wave wave in genericWaves)
+		{
+			wave.seed = GenerateWaveSeed();
+			wave.frequency = GenerateFreqAmp();
+			wave.amplitude = GenerateFreqAmp();
+		}
+
+		return genericWaves;
 	}
 
 	void GenerateMap()
@@ -80,18 +91,31 @@ public class LevelGeneration : MonoBehaviour
 				GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
 
 				// generate the Tile texture and save it in the levelData
-				TileData tileData = tile.GetComponent<TileGeneration>().GenerateTile(centerVertexZ, maxDistanceZ, waves);
+				TileData tileData = tile.GetComponent<TileGeneration>().GenerateTile(centerVertexZ, maxDistanceZ, terrainWaves);
 				levelData.AddTileData(tileData, zTile, xTile);
 			}
 		}
 
 		// generate trees for the level
-		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData);
+		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves());
 
 		// generate foliage for the level
-		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData);
+		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves());
 
 	}
+
+	private float GenerateWaveSeed()
+	{
+		float seed = Random.Range(0f, 9999f);
+		return seed;
+	}
+
+	private float GenerateFreqAmp()
+	{
+		float freqAmp = Random.Range(0f, 4f);
+		return freqAmp;
+	}
+
 }
 
 public class LevelData
