@@ -5,8 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    
-    public void PlayGame()
+
+	void Start()
+	{
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+		
+	}
+
+	public void PlayGame()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}

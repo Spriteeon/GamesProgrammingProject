@@ -19,9 +19,35 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField]
 	private FoliageGeneration foliageGeneration;
 
+	[SerializeField]
+	private Wave[] waves;
+
 	void Start()
 	{
+		GenerateTerrainWaves();
 		GenerateMap();
+	}
+
+	private void GenerateTerrainWaves()
+	{
+		// Create random waves
+		waves[0].seed = GenerateWaveSeed();
+		waves[0].frequency = 1f;
+		waves[0].amplitude = 1f;
+
+		waves[1].seed = GenerateWaveSeed();
+		waves[1].frequency = 0.5f;
+		waves[1].amplitude = 2f;
+
+		waves[2].seed = GenerateWaveSeed();
+		waves[2].frequency = 0.5f;
+		waves[2].amplitude = 4f;
+	}
+
+	private float GenerateWaveSeed()
+	{
+		float seed = Random.Range(0f, 9999f);
+		return seed;
 	}
 
 	void GenerateMap()
@@ -54,7 +80,7 @@ public class LevelGeneration : MonoBehaviour
 				GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
 
 				// generate the Tile texture and save it in the levelData
-				TileData tileData = tile.GetComponent<TileGeneration>().GenerateTile(centerVertexZ, maxDistanceZ);
+				TileData tileData = tile.GetComponent<TileGeneration>().GenerateTile(centerVertexZ, maxDistanceZ, waves);
 				levelData.AddTileData(tileData, zTile, xTile);
 			}
 		}

@@ -29,8 +29,8 @@ public class TileGeneration : MonoBehaviour
 	[SerializeField]
 	private AnimationCurve heightCurve;
 
-	[SerializeField]
-	private Wave[] waves;
+	//[SerializeField]
+	//private Wave[] wavestwo;
 
 	//void Start()
 	//{
@@ -41,12 +41,12 @@ public class TileGeneration : MonoBehaviour
 	public Texture lowTexture, mediumTexture, highTexture;
 	Renderer renderer;
 
-	private Wave[] GenerateWaves()
-	{
-		return waves;
-	}
+	//private Wave[] GenerateWaves()
+	//{
+	//	return wavestwo;
+	//}
 
-	public TileData GenerateTile(float centerVertexZ, float maxDistanceZ)
+	public TileData GenerateTile(float centerVertexZ, float maxDistanceZ, Wave[] waves)
 	{
 		renderer = this.gameObject.GetComponent<Renderer>();
 
@@ -60,7 +60,7 @@ public class TileGeneration : MonoBehaviour
 		float offsetZ = -this.gameObject.transform.position.z;
 
 		// calculate the offsets based on the tile position
-		float[,] heightMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, GenerateWaves());
+		float[,] heightMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, waves);
 
 		TerrainType[,] heightTerrainTypes = new TerrainType[tileDepth, tileWidth];
 
@@ -100,7 +100,8 @@ public class TileGeneration : MonoBehaviour
 		{
 			for (int x = 0; x < tileWidth; x++)
 			{
-				uvs[i] = new Vector2((float)x / tileWidth, (float)z / tileDepth);
+				//uvs[i] = new Vector2((float)x / tileWidth, (float)z / tileDepth);
+				uvs[i] = new Vector2((float)x / tileWidth * 2, (float)z / tileDepth * 2);
 				i++;
 			}
 		}
