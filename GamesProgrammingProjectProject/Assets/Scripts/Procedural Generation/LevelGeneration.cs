@@ -112,7 +112,7 @@ public class LevelGeneration : MonoBehaviour
 
 	private float GenerateFreqAmp()
 	{
-		float freqAmp = Random.Range(0f, 3f);
+		float freqAmp = Random.Range(0f, 2f);
 		return freqAmp;
 	}
 
