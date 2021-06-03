@@ -101,16 +101,13 @@ public class FoliageGeneration : MonoBehaviour
 							Vector3 foliagePosition = new Vector3(xPos, yPos, zPos);
 
 							// Pick a random tree Prefab
-							int randNum = Random.Range(1, 4);
+							int randNum = Random.Range(1, 3);
 							switch (randNum)
 							{
 								case 1:
-									foliagePrefab = foliagePrefab1;
-									break;
-								case 2:
 									foliagePrefab = foliagePrefab2;
 									break;
-								case 3:
+								case 2:
 									foliagePrefab = foliagePrefab3;
 									break;
 								default:
@@ -118,7 +115,7 @@ public class FoliageGeneration : MonoBehaviour
 							}
 
 							// Pick a random tree scale
-							float foliageScale = Random.Range(0.3f, 0.5f);
+							float foliageScale = Random.Range(0.05f, 0.2f);
 
 							GameObject foliage = Instantiate(this.foliagePrefab, foliagePosition, Quaternion.identity) as GameObject;
 							foliage.transform.localScale = new Vector3(foliageScale, foliageScale, foliageScale);

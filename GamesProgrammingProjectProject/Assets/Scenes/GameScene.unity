@@ -768,6 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86204b41b5cb04d4cacdf7cf0e34954c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
   pauseMenu: {fileID: 1148783750}
 --- !u!1 &1148783745
 GameObject:
@@ -881,6 +882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9044c2ba57726e642a5f749261eb685f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPaused: 0
   pauseMenuUI: {fileID: 1563220649}
   player: {fileID: 1107993042}
 --- !u!1001 &1210621173
@@ -1418,8 +1420,10 @@ MonoBehaviour:
   levelScale: 1.1
   neighborRadius: 1
   foliagePrefab1: {fileID: 100000, guid: 7b1460807121f9c41b20dc1f4578fd8f, type: 3}
-  foliagePrefab2: {fileID: 100000, guid: cea115c45a612d4498f6e217d227ddc4, type: 3}
-  foliagePrefab3: {fileID: 100000, guid: 41dbe63909c99254baa0c6323eb510a1, type: 3}
+  foliagePrefab2: {fileID: 1639987689182440, guid: 4c001ec3cbfef9446a573fe16815e9af,
+    type: 3}
+  foliagePrefab3: {fileID: 1639987689182440, guid: 1237551950c246d43ab02b1d69e6f317,
+    type: 3}
 --- !u!114 &2052644499
 MonoBehaviour:
   m_ObjectHideFlags: 0
