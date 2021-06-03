@@ -1417,7 +1417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseMapGeneration: {fileID: 2052644496}
-  levelScale: 1.1
+  levelScale: 1
   neighborRadius: 1
   foliagePrefab1: {fileID: 100000, guid: 7b1460807121f9c41b20dc1f4578fd8f, type: 3}
   foliagePrefab2: {fileID: 1639987689182440, guid: 4c001ec3cbfef9446a573fe16815e9af,
