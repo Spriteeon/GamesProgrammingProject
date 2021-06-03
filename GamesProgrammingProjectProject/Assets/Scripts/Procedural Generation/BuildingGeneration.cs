@@ -107,7 +107,7 @@ public class BuildingGeneration : MonoBehaviour
 
 						float buildingScale = 2.5f;
 
-						float yRotation = Random.Range(0.0f, 180.0f);
+						float yRotation = Random.Range(-180.0f, 180.0f);
 
 						GameObject building = Instantiate(this.buildingPrefab, buildingPosition, Quaternion.identity) as GameObject;
 						building.transform.localScale = new Vector3(buildingScale, buildingScale, buildingScale);
