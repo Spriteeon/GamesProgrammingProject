@@ -692,7 +692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1186,6 +1186,7 @@ GameObject:
   - component: {fileID: 2052644497}
   - component: {fileID: 2052644498}
   - component: {fileID: 2052644496}
+  - component: {fileID: 2052644499}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -1213,6 +1214,7 @@ MonoBehaviour:
   maxDistanceZ: 205
   treeGeneration: {fileID: 2052644497}
   foliageGeneration: {fileID: 2052644498}
+  buildingGeneration: {fileID: 2052644499}
   terrainWaves:
   - seed: 0
     frequency: 0
@@ -1245,7 +1247,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2052644496
 MonoBehaviour:
@@ -1298,3 +1300,20 @@ MonoBehaviour:
   foliagePrefab1: {fileID: 100000, guid: 7b1460807121f9c41b20dc1f4578fd8f, type: 3}
   foliagePrefab2: {fileID: 100000, guid: cea115c45a612d4498f6e217d227ddc4, type: 3}
   foliagePrefab3: {fileID: 100000, guid: 41dbe63909c99254baa0c6323eb510a1, type: 3}
+--- !u!114 &2052644499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052644493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af80bc8178e52a4c81827bea99594c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseMapGeneration: {fileID: 2052644496}
+  levelScale: 10
+  neighborRadius: 20
+  buildingPrefab: {fileID: 3490919962062071908, guid: 249ec3b47012d09499d657f207f7b349,
+    type: 3}

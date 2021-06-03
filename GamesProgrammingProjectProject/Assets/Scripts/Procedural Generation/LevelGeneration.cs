@@ -20,6 +20,9 @@ public class LevelGeneration : MonoBehaviour
 	private FoliageGeneration foliageGeneration;
 
 	[SerializeField]
+	private BuildingGeneration buildingGeneration;
+
+	[SerializeField]
 	private Wave[] terrainWaves;
 
 	[SerializeField]
@@ -97,6 +100,9 @@ public class LevelGeneration : MonoBehaviour
 		}
 
 		// generate trees for the level
+		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves());
+
+		// generate trees for the level
 		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves());
 
 		// generate foliage for the level
@@ -112,7 +118,7 @@ public class LevelGeneration : MonoBehaviour
 
 	private float GenerateFreqAmp()
 	{
-		float freqAmp = Random.Range(0f, 2f);
+		float freqAmp = Random.Range(0.5f, 2f);
 		return freqAmp;
 	}
 

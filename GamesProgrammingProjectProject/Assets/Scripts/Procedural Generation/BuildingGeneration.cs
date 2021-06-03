@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoliageGeneration : MonoBehaviour
+public class BuildingGeneration : MonoBehaviour
 {
 	[SerializeField]
 	private NoiseMapGeneration noiseMapGeneration;
-
-	//[SerializeField]
-	//private Wave[] waves;
 
 	[SerializeField]
 	private float levelScale;
@@ -17,24 +14,16 @@ public class FoliageGeneration : MonoBehaviour
 	private float neighborRadius;
 
 	[SerializeField]
-	private GameObject foliagePrefab1;
-
-	[SerializeField]
-	private GameObject foliagePrefab2;
-
-	[SerializeField]
-	private GameObject foliagePrefab3;
-
-	private GameObject foliagePrefab;
+	private GameObject buildingPrefab;
 
 	RaycastHit hit;
 	float maxHeight = 20f;
 	Ray ray;
 
-	public void GenerateFoliage(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData, Wave[] waves)
+	public void GenerateBuildings(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData, Wave[] waves)
 	{
 		// generate a tree noise map using Perlin Noise
-		float[,] treeMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, waves);
+		float[,] buildingMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, waves);
 
 		float levelSizeX = levelWidth * distanceBetweenVertices;
 		float levelSizeZ = levelDepth * distanceBetweenVertices;
@@ -54,10 +43,10 @@ public class FoliageGeneration : MonoBehaviour
 
 				// get the terrain type of this coordinate
 				TerrainType terrainType = tileData.heightTerrainTypes[tileCoordinate.coordinateZ, tileCoordinate.coordinateX];
-				// check if it is a low terrain
-				if (terrainType.name != "lowest") //Use low to clear clearings
+				// check if it is a water terrain. Trees cannot be placed over the water
+				if (terrainType.name == "low")
 				{
-					float treeValue = treeMap[z, x];
+					float buildingValue = buildingMap[z, x];
 
 					// int terrainTypeIndex = terrainType.index;
 
@@ -71,7 +60,7 @@ public class FoliageGeneration : MonoBehaviour
 					{
 						for (int neighborX = neighborXBegin; neighborX <= neighborXEnd; neighborX++)
 						{
-							float neighborValue = treeMap[neighborZ, neighborX];
+							float neighborValue = buildingMap[neighborZ, neighborX];
 							// saves the maximum tree noise value in the radius
 							if (neighborValue >= maxValue)
 							{
@@ -81,50 +70,48 @@ public class FoliageGeneration : MonoBehaviour
 					}
 
 					// if the current tree noise value is the maximum one, place a tree in this location
-					if (treeValue == maxValue)
+					if (buildingValue == maxValue)
 					{
 
 						float xPos = x * distanceBetweenVertices;
 						float zPos = z * distanceBetweenVertices;
 						float yPos = 0f;
 
-						//Ray ray = new Ray(new Vector3(xPos, maxHeight, zPos), Vector3.down);
 						ray.origin = new Vector3(xPos, maxHeight, zPos);
 						ray.direction = Vector3.down;
 						hit = new RaycastHit();
 
 						if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
 						{
-							yPos = hit.point.y - 0.1f;
-
-							//Vector3 foliagePosition = new Vector3(xPos, meshVertices[vertexIndex].y - 0.1f, zPos);
-							Vector3 foliagePosition = new Vector3(xPos, yPos, zPos);
-
-							// Pick a random tree Prefab
-							int randNum = Random.Range(1, 4);
-							switch (randNum)
-							{
-								case 1:
-									foliagePrefab = foliagePrefab1;
-									break;
-								case 2:
-									foliagePrefab = foliagePrefab2;
-									break;
-								case 3:
-									foliagePrefab = foliagePrefab3;
-									break;
-								default:
-									break;
-							}
-
-							// Pick a random tree scale
-							float foliageScale = Random.Range(0.3f, 0.5f);
-
-							GameObject foliage = Instantiate(this.foliagePrefab, foliagePosition, Quaternion.identity) as GameObject;
-							foliage.transform.localScale = new Vector3(foliageScale, foliageScale, foliageScale);
-							//foliage.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+							yPos = hit.point.y + 1.8f;
 						}
 
+						Vector3 buildingPosition = new Vector3(xPos, yPos, zPos);
+
+						// Pick a random tree Prefab
+						//int randNum = Random.Range(1, 4);
+						//switch (randNum)
+						//{
+						//	case 1:
+						//		treePrefab = treePrefab1;
+						//		break;
+						//	case 2:
+						//		treePrefab = treePrefab2;
+						//		break;
+						//	case 3:
+						//		treePrefab = treePrefab3;
+						//		break;
+						//	default:
+						//		break;
+						//}
+
+						float buildingScale = 2.5f;
+
+						float yRotation = Random.Range(0.0f, 180.0f);
+
+						GameObject building = Instantiate(this.buildingPrefab, buildingPosition, Quaternion.identity) as GameObject;
+						building.transform.localScale = new Vector3(buildingScale, buildingScale, buildingScale);
+						building.transform.Rotate(0.0f, yRotation, 0.0f);
 					}
 				}
 			}
