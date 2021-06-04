@@ -133,10 +133,12 @@ public class TreeGeneration : MonoBehaviour
 							// Pick a random tree scale
 							float treeScale = Random.Range(2.0f, 4.0f);
 
+							float yRotation = Random.Range(-180.0f, 180.0f);
+
 							GameObject tree = Instantiate(this.treePrefab, treePosition, Quaternion.identity) as GameObject;
 							tree.transform.localScale = new Vector3(treeScale, treeScale, treeScale);
+							tree.transform.Rotate(0.0f, yRotation, 0.0f);
 						}
-
 					}
 				}
 			}

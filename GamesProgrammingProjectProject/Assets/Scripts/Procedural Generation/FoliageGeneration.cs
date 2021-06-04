@@ -117,11 +117,12 @@ public class FoliageGeneration : MonoBehaviour
 							// Pick a random tree scale
 							float foliageScale = Random.Range(0.05f, 0.2f);
 
+							float yRotation = Random.Range(-180.0f, 180.0f);
+
 							GameObject foliage = Instantiate(this.foliagePrefab, foliagePosition, Quaternion.identity) as GameObject;
 							foliage.transform.localScale = new Vector3(foliageScale, foliageScale, foliageScale);
-							//foliage.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+							foliage.transform.Rotate(0.0f, yRotation, 0.0f);
 						}
-
 					}
 				}
 			}
