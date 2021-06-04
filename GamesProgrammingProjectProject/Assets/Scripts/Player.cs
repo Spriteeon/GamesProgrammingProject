@@ -10,12 +10,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PauseMenu pauseMenu;
 
+    float health;
     float candleLevel;
     float stamina;
 
     // Start is called before the first frame update
     void Start()
     {
+        health = 100f;
         candleLevel = 100f;
         stamina = 100f;
 

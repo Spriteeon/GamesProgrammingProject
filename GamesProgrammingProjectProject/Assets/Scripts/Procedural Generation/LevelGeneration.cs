@@ -28,6 +28,15 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField]
 	private Wave[] genericWaves;
 
+	float buildingMin = 0.5f;
+	float buildingMax = 2f;
+
+	float treeMin = 0.5f;
+	float treeMax = 2f;
+
+	float foliageMin = 0.5f;
+	float foliageMax = 2f;
+
 	void Start()
 	{
 		GenerateTerrainWaves();
@@ -39,7 +48,7 @@ public class LevelGeneration : MonoBehaviour
 		// Create random waves
 		terrainWaves[0].seed = GenerateWaveSeed();
 		terrainWaves[0].frequency = 1f;
-		terrainWaves[0].amplitude = 1f;
+		terrainWaves[0].amplitude = 2f;
 
 		terrainWaves[1].seed = GenerateWaveSeed();
 		terrainWaves[1].frequency = 0.5f;
@@ -50,15 +59,15 @@ public class LevelGeneration : MonoBehaviour
 		terrainWaves[2].amplitude = 4f;
 	}
 
-	private Wave[] GenerateGenericWaves()
+	private Wave[] GenerateGenericWaves(float min, float max)
 	{
 		// Create random waves for Trees and Terrain
 		//genericWaves = new Wave[3];
 		foreach (Wave wave in genericWaves)
 		{
 			wave.seed = GenerateWaveSeed();
-			wave.frequency = GenerateFreqAmp();
-			wave.amplitude = GenerateFreqAmp();
+			wave.frequency = GenerateFreqAmp(min, max);
+			wave.amplitude = GenerateFreqAmp(min, max);
 		}
 
 		return genericWaves;
@@ -100,13 +109,13 @@ public class LevelGeneration : MonoBehaviour
 		}
 
 		// generate trees for the level
-		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves());
+		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
 
 		// generate trees for the level
-		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves());
+		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(treeMin, treeMax));
 
 		// generate foliage for the level
-		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves());
+		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(foliageMin, foliageMax));
 
 	}
 
@@ -116,9 +125,9 @@ public class LevelGeneration : MonoBehaviour
 		return seed;
 	}
 
-	private float GenerateFreqAmp()
+	private float GenerateFreqAmp(float min, float max)
 	{
-		float freqAmp = Random.Range(0.5f, 2f);
+		float freqAmp = Random.Range(min, max);
 		return freqAmp;
 	}
 

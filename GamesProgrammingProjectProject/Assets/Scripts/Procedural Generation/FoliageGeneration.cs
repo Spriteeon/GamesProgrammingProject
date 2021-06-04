@@ -7,9 +7,6 @@ public class FoliageGeneration : MonoBehaviour
 	[SerializeField]
 	private NoiseMapGeneration noiseMapGeneration;
 
-	//[SerializeField]
-	//private Wave[] waves;
-
 	[SerializeField]
 	private float levelScale;
 
