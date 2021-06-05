@@ -48,6 +48,7 @@ public class LevelGeneration : MonoBehaviour
 	private Vector3[] patrolPoints;
 	private int numPatrolPoints = 10;
 	private Vector3 mapCentre = new Vector3(190f, 0f, 190f);
+	private float playableMapRadius = 170f;
 
 	RaycastHit hit;
 	float maxHeight = 20f;
@@ -156,11 +157,15 @@ public class LevelGeneration : MonoBehaviour
 		{
 
 			// Get a random x, y value inside level boundary
-			Vector2 randomPoint = Random.insideUnitCircle.normalized * 170f;
-			Vector3 randomPoint3D = new Vector3(randomPoint.x, 0f, randomPoint.y);
-			Vector3 actualPoint = randomPoint3D + mapCentre;
+			//Vector2 randomPoint = Random.insideUnitCircle.normalized * 170f;
+			//Vector3 randomPoint3D = new Vector3(randomPoint.x, 0f, randomPoint.y);
+			//Vector3 actualPoint = randomPoint3D + mapCentre;
 
-			ray.origin = new Vector3(actualPoint.x, maxHeight, actualPoint.z);
+			Vector3 randomPoint = mapCentre;
+			randomPoint.x += Random.Range(-playableMapRadius, playableMapRadius);
+			randomPoint.z += Random.Range(-playableMapRadius, playableMapRadius);
+
+			ray.origin = new Vector3(randomPoint.x, maxHeight, randomPoint.z);
 			ray.direction = Vector3.down;
 			hit = new RaycastHit();
 
@@ -168,7 +173,7 @@ public class LevelGeneration : MonoBehaviour
 			{
 				float yPos = hit.point.y + 0.5f;
 
-				Vector3 patrolPointPosition = new Vector3(actualPoint.x, yPos, actualPoint.z);
+				Vector3 patrolPointPosition = new Vector3(randomPoint.x, yPos, randomPoint.z);
 
 				patrolPoints[i] = patrolPointPosition;
 

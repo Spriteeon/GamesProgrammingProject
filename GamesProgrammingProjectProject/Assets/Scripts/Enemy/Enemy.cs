@@ -19,9 +19,13 @@ public class Enemy : MonoBehaviour
     NavMeshAgent agent;
 
     float distanceToPlayer;
+    float distanceToPatrolPoint;
+
+    private bool pointReached = true;
 
     public Vector3[] patrolPoints;
     private int currentPoint;
+    Vector3 randomPatrolPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -53,15 +57,30 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            // Patrol Waypoints
-            Patrol();
+            // Patrol
+            if(!pointReached)
+			{
+                distanceToPatrolPoint = Vector3.Distance(randomPatrolPoint, transform.position);
+                if (distanceToPatrolPoint <= agent.stoppingDistance)
+				{
+                    pointReached = true;
+				}
+            }
+			else // Patrol Point reached
+			{
+                NewPatrol();
+			}
         }
     }
 
-    void Patrol()
+    void NewPatrol()
 	{
+        int randomPatrolPointIndex = Random.Range(0, patrolPoints.Length);
+        randomPatrolPoint = patrolPoints[randomPatrolPointIndex];
 
-	}
+        agent.SetDestination(randomPatrolPoint);
+        pointReached = false;
+    }
 
     public void GetPatrolPoints(Vector3[] points)
 	{
