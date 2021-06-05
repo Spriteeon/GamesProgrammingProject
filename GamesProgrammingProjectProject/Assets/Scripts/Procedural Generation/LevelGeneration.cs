@@ -45,8 +45,21 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField]
 	private Enemy enemy;
 
+	private Vector3[] patrolPoints;
+	private int numPatrolPoints = 10;
+	private Vector3 mapCentre = new Vector3(190f, 0f, 190f);
+
+	RaycastHit hit;
+	float maxHeight = 20f;
+	Ray ray;
+
+	[SerializeField]
+	private GameObject debugObject;
+
 	void Start()
 	{
+		patrolPoints = new Vector3[numPatrolPoints];
+
 		GenerateTerrainWaves();
 		GenerateMap();
 	}
@@ -120,6 +133,9 @@ public class LevelGeneration : MonoBehaviour
 		player.UpdatePlayerPosition();
 		enemy.UpdateEnemyPosition();
 
+		GeneratePatrolPoints();
+		enemy.GetPatrolPoints(patrolPoints);
+
 		// generate trees for the level
 		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
 
@@ -132,6 +148,35 @@ public class LevelGeneration : MonoBehaviour
 		NavMeshBuilder.ClearAllNavMeshes();
 		NavMeshBuilder.BuildNavMesh();
 
+	}
+
+	private void GeneratePatrolPoints()
+	{
+		for(int i = 0; i < numPatrolPoints; i++)
+		{
+
+			// Get a random x, y value inside level boundary
+			Vector2 randomPoint = Random.insideUnitCircle.normalized * 170f;
+			Vector3 randomPoint3D = new Vector3(randomPoint.x, 0f, randomPoint.y);
+			Vector3 actualPoint = randomPoint3D + mapCentre;
+
+			ray.origin = new Vector3(actualPoint.x, maxHeight, actualPoint.z);
+			ray.direction = Vector3.down;
+			hit = new RaycastHit();
+
+			if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
+			{
+				float yPos = hit.point.y + 0.5f;
+
+				Vector3 patrolPointPosition = new Vector3(actualPoint.x, yPos, actualPoint.z);
+
+				patrolPoints[i] = patrolPointPosition;
+
+				GameObject patrolPointDebug = Instantiate(this.debugObject, patrolPointPosition, Quaternion.identity) as GameObject;
+				//tree.transform.localScale = new Vector3(treeScale, treeScale, treeScale);
+				//tree.transform.Rotate(0.0f, yRotation, 0.0f);
+			}
+		}
 	}
 
 	private float GenerateWaveSeed()
