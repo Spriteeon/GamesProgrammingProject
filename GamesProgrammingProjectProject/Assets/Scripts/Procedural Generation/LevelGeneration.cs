@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class LevelGeneration : MonoBehaviour
 {
@@ -36,6 +37,9 @@ public class LevelGeneration : MonoBehaviour
 
 	float foliageMin = 0.5f;
 	float foliageMax = 2f;
+
+	[SerializeField]
+	private Player player;
 
 	void Start()
 	{
@@ -107,6 +111,9 @@ public class LevelGeneration : MonoBehaviour
 				levelData.AddTileData(tileData, zTile, xTile);
 			}
 		}
+
+		// Update Player Position
+		player.UpdatePlayerPosition();
 
 		// generate trees for the level
 		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));

@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private PauseMenu pauseMenu;
-    public GameObject candle;
+    [SerializeField]
+    private GameObject candle;
 
     public float maxHealth = 100f;
     public float currentHealth;
@@ -25,9 +26,14 @@ public class Player : MonoBehaviour
 
     Timer candleTimer;
 
+    RaycastHit hit;
+    float maxHeight = 20f;
+    Ray ray;
+
     // Start is called before the first frame update
     void Start()
     {
+
         candle.SetActive(true);
         candleTimer = new Timer(1f);
         isSafe = false;
@@ -48,12 +54,12 @@ public class Player : MonoBehaviour
     {
         position = this.gameObject.transform.position;
 
-        if(candleTimer.ExpireReset())
+		if (candleTimer.ExpireReset())
 		{
-            IncreaseCandle(1f);
+			IncreaseCandle(1f);
 		}
 
-        if (pauseMenu.isPaused)
+		if (pauseMenu.isPaused)
 		{
             this.GetComponent<FirstPersonController>().enabled = false;
         }
@@ -66,6 +72,31 @@ public class Player : MonoBehaviour
 		{
             SwitchCandle();
 		}
+    }
+
+    public void UpdatePlayerPosition()
+    {
+        this.gameObject.SetActive(false);
+
+        Debug.Log("Updating Position");
+
+        float xPos = this.gameObject.transform.position.x;
+        float zPos = this.gameObject.transform.position.z;
+        float yPos = 0f;
+
+        ray.origin = new Vector3(xPos, maxHeight, zPos);
+        ray.direction = Vector3.down;
+        hit = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
+        {
+            yPos = hit.point.y + 1f;
+            Vector3 newPosition = new Vector3(xPos, yPos, zPos);
+
+            this.gameObject.transform.position = newPosition;
+        }
+
+        this.gameObject.SetActive(true);
     }
 
     void SwitchCandle()
