@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public UIBar healthBar;
     public UIBar candleBar;
 
+    public bool isSafe = false;
+
     Timer candleTimer;
 
     // Start is called before the first frame update
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
     {
         candle.SetActive(true);
         candleTimer = new Timer(1f);
+        isSafe = false;
 
         currentHealth = maxHealth;
         healthBar.SetMaxValue(maxHealth);
@@ -47,7 +50,7 @@ public class Player : MonoBehaviour
 
         if(candleTimer.ExpireReset())
 		{
-            DecreaseCandle(1f);
+            IncreaseCandle(1f);
 		}
 
         if (pauseMenu.isPaused)
@@ -63,11 +66,6 @@ public class Player : MonoBehaviour
 		{
             SwitchCandle();
 		}
-
-  //      if(Input.GetKeyDown(KeyCode.Space))
-		//{
-  //          TakeDamage(20f);
-		//}
     }
 
     void SwitchCandle()
@@ -81,9 +79,18 @@ public class Player : MonoBehaviour
         healthBar.SetValue(currentHealth);
 	}
 
-    void DecreaseCandle(float value)
+    void IncreaseCandle(float value)
 	{
-        if (candle.activeSelf)
+        if (isSafe && currentCandle < 100) // Increase Candle
+		{
+            currentCandle += 2 * value;
+            if (currentCandle == 99f)
+			{
+                currentCandle = 100f;
+			}
+            candleBar.SetValue(currentCandle);
+        }
+        else if (candle.activeSelf && !isSafe && currentCandle >= 0) // Decrease Candle
 		{
             currentCandle -= value;
             candleBar.SetValue(currentCandle);
