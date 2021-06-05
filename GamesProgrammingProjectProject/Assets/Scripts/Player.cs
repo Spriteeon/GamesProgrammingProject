@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private PauseMenu pauseMenu;
+    public GameObject candle;
 
     public float maxHealth = 100f;
     public float currentHealth;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        candle.SetActive(true);
         candleTimer = new Timer(1f);
 
         currentHealth = maxHealth;
@@ -57,10 +59,20 @@ public class Player : MonoBehaviour
             this.GetComponent<FirstPersonController>().enabled = true;
         }
 
+        if(Input.GetKeyDown(KeyCode.F))
+		{
+            SwitchCandle();
+		}
+
   //      if(Input.GetKeyDown(KeyCode.Space))
 		//{
   //          TakeDamage(20f);
 		//}
+    }
+
+    void SwitchCandle()
+	{
+        candle.SetActive(!candle.activeSelf);
     }
 
     void TakeDamage(float damage)
@@ -71,7 +83,10 @@ public class Player : MonoBehaviour
 
     void DecreaseCandle(float value)
 	{
-        currentCandle -= value;
-        candleBar.SetValue(currentCandle);
+        if (candle.activeSelf)
+		{
+            currentCandle -= value;
+            candleBar.SetValue(currentCandle);
+        }
 	}
 }

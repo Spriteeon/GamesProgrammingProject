@@ -7,13 +7,21 @@ public class LightFlicker : MonoBehaviour
     public bool isFlickering = false;
     public float timeDelay;
 
+    void OnEnable()
+	{
+        isFlickering = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(!isFlickering)
+        if(this.gameObject.activeSelf)
 		{
-            StartCoroutine(FlickeringLight());
-		}
+            if (!isFlickering)
+            {
+                StartCoroutine(FlickeringLight());
+            }
+        }
     }
 
     IEnumerator FlickeringLight()
