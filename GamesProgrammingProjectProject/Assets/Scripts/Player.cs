@@ -10,15 +10,29 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PauseMenu pauseMenu;
 
-    float health;
-    float candleLevel;
+    public float maxHealth = 100f;
+    public float currentHealth;
+    public float maxCandle = 100f;
+    public float currentCandle;
+
     float stamina;
+
+    public UIBar healthBar;
+    public UIBar candleBar;
+
+    Timer candleTimer;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = 100f;
-        candleLevel = 100f;
+        candleTimer = new Timer(1f);
+
+        currentHealth = maxHealth;
+        healthBar.SetMaxValue(maxHealth);
+
+        currentCandle = maxCandle;
+        candleBar.SetMaxValue(maxCandle);
+
         stamina = 100f;
 
         position = this.gameObject.transform.position;
@@ -29,6 +43,11 @@ public class Player : MonoBehaviour
     {
         position = this.gameObject.transform.position;
 
+        if(candleTimer.ExpireReset())
+		{
+            DecreaseCandle(1f);
+		}
+
         if (pauseMenu.isPaused)
 		{
             this.GetComponent<FirstPersonController>().enabled = false;
@@ -38,5 +57,21 @@ public class Player : MonoBehaviour
             this.GetComponent<FirstPersonController>().enabled = true;
         }
 
+  //      if(Input.GetKeyDown(KeyCode.Space))
+		//{
+  //          TakeDamage(20f);
+		//}
     }
+
+    void TakeDamage(float damage)
+	{
+        currentHealth -= damage;
+        healthBar.SetValue(currentHealth);
+	}
+
+    void DecreaseCandle(float value)
+	{
+        currentCandle -= value;
+        candleBar.SetValue(currentCandle);
+	}
 }
