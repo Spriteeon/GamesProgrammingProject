@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
         candle.SetActive(!candle.activeSelf);
     }
 
-    void TakeDamage(float damage)
+    public void TakeDamage(float damage)
 	{
         currentHealth -= damage;
         healthBar.SetValue(currentHealth);

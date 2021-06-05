@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public float lookRadius = 10f;
     Transform target;
     NavMeshAgent agent;
+    Player player;
 
     float distanceToPlayer;
     float distanceToPatrolPoint;
@@ -31,6 +32,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         position = this.gameObject.transform.position;
+
+        player = PlayerManager.instance.player.GetComponent<Player>();
 
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -53,6 +56,7 @@ public class Enemy : MonoBehaviour
                 FaceTarget();
 
                 // Attack Player
+                AttackPlayer();
             }
         }
         else
@@ -71,6 +75,11 @@ public class Enemy : MonoBehaviour
                 NewPatrol();
 			}
         }
+    }
+
+    void AttackPlayer()
+	{
+        player.TakeDamage(20f);
     }
 
     void NewPatrol()
