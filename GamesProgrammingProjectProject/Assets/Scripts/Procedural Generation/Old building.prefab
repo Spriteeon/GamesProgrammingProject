@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2132546811011845339}
   - component: {fileID: 2132546811021632319}
+  - component: {fileID: 7427564773353668654}
   m_Layer: 10
   m_Name: Old building
   m_TagString: Untagged
@@ -54,6 +55,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!208 &7427564773353668654
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132546811012272379}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 1.5, z: 2}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -0.2}
+  m_TimeToStationary: 0.5
 --- !u!1 &2132546811012272381
 GameObject:
   m_ObjectHideFlags: 0

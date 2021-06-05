@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingGeneration : MonoBehaviour
+public class ItemGeneration : MonoBehaviour
 {
 	[SerializeField]
 	private NoiseMapGeneration noiseMapGeneration;
@@ -20,7 +20,7 @@ public class BuildingGeneration : MonoBehaviour
 	float maxHeight = 20f;
 	Ray ray;
 
-	public void GenerateBuildings(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData, Wave[] waves)
+	public void GenerateItems(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData, Wave[] waves)
 	{
 		// generate a tree noise map using Perlin Noise
 		float[,] buildingMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, waves);
@@ -38,8 +38,8 @@ public class BuildingGeneration : MonoBehaviour
 				int tileWidth = tileData.heightMap.GetLength(1);
 
 				// calculate the mesh vertex index
-				//Vector3[] meshVertices = tileData.mesh.vertices;
-				//int vertexIndex = tileCoordinate.coordinateZ * tileWidth + tileCoordinate.coordinateX;
+				Vector3[] meshVertices = tileData.mesh.vertices;
+				int vertexIndex = tileCoordinate.coordinateZ * tileWidth + tileCoordinate.coordinateX;
 
 				// get the terrain type of this coordinate
 				TerrainType terrainType = tileData.heightTerrainTypes[tileCoordinate.coordinateZ, tileCoordinate.coordinateX];

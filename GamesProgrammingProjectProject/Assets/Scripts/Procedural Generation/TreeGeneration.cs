@@ -46,8 +46,8 @@ public class TreeGeneration : MonoBehaviour
 				int tileWidth = tileData.heightMap.GetLength(1);
 
 				// calculate the mesh vertex index
-				Vector3[] meshVertices = tileData.mesh.vertices;
-				int vertexIndex = tileCoordinate.coordinateZ * tileWidth + tileCoordinate.coordinateX;
+				//Vector3[] meshVertices = tileData.mesh.vertices;
+				//int vertexIndex = tileCoordinate.coordinateZ * tileWidth + tileCoordinate.coordinateX;
 
 				// get the terrain type of this coordinate
 				TerrainType terrainType = tileData.heightTerrainTypes[tileCoordinate.coordinateZ, tileCoordinate.coordinateX];

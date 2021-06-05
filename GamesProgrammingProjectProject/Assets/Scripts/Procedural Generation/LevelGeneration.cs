@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEditor.AI;
 
 public class LevelGeneration : MonoBehaviour
 {
@@ -40,6 +41,9 @@ public class LevelGeneration : MonoBehaviour
 
 	[SerializeField]
 	private Player player;
+
+	[SerializeField]
+	private Enemy enemy;
 
 	void Start()
 	{
@@ -112,8 +116,9 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
-		// Update Player Position
+		// Update Player and Enemy Position
 		player.UpdatePlayerPosition();
+		enemy.UpdateEnemyPosition();
 
 		// generate trees for the level
 		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
@@ -123,6 +128,9 @@ public class LevelGeneration : MonoBehaviour
 
 		// generate foliage for the level
 		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(foliageMin, foliageMax));
+
+		NavMeshBuilder.ClearAllNavMeshes();
+		NavMeshBuilder.BuildNavMesh();
 
 	}
 
