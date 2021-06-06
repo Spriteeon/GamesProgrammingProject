@@ -19,9 +19,6 @@ public class FoliageGeneration : MonoBehaviour
 	[SerializeField]
 	private GameObject foliagePrefab2;
 
-	[SerializeField]
-	private GameObject foliagePrefab3;
-
 	private GameObject foliagePrefab;
 
 	RaycastHit hit;
@@ -98,14 +95,14 @@ public class FoliageGeneration : MonoBehaviour
 							Vector3 foliagePosition = new Vector3(xPos, yPos, zPos);
 
 							// Pick a random tree Prefab
-							int randNum = Random.Range(1, 3);
+							int randNum = Random.Range(0, 2);
 							switch (randNum)
 							{
+								case 0:
+									foliagePrefab = foliagePrefab1;
+									break;
 								case 1:
 									foliagePrefab = foliagePrefab2;
-									break;
-								case 2:
-									foliagePrefab = foliagePrefab3;
 									break;
 								default:
 									break;

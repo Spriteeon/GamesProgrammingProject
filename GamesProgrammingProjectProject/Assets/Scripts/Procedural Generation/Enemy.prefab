@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5791540307385805935}
   - component: {fileID: 5791540307385805934}
   - component: {fileID: 5791540307385805921}
-  - component: {fileID: 5791540307385805920}
   - component: {fileID: 5791540307385805933}
   m_Layer: 0
   m_Name: Enemy
@@ -89,19 +88,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5791540307385805920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5791540307385805923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 374150e72c419a64c99a7c4200df35b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lookRadius: 10
 --- !u!114 &5791540307385805933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
-  damage: 5
+  damage: 20
+  lookRadius: 20
+  patrolPoints: []
 --- !u!1 &5791540307410380141
 GameObject:
   m_ObjectHideFlags: 0

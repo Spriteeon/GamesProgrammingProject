@@ -8,16 +8,12 @@ public class Enemy : MonoBehaviour
 
     public Vector3 position;
 
-    public float damage = 5f;
+    public float damage = 20f;
 
-    RaycastHit hit;
-    float maxHeight = 20f;
-    Ray ray;
-
-    public float lookRadius = 10f;
-    Transform target;
-    NavMeshAgent agent;
-    Player player;
+    public float lookRadius = 20f;
+    private Transform target;
+    private NavMeshAgent agent;
+    private Player player;
 
     float distanceToPlayer;
     float distanceToPatrolPoint;
@@ -49,7 +45,7 @@ public class Enemy : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
 
-        if (distanceToPlayer <= lookRadius && !player.isSafe)
+        if (distanceToPlayer <= lookRadius && !player.isInside)
         {
             pointReached = true;
             agent.SetDestination(target.position);
@@ -85,7 +81,7 @@ public class Enemy : MonoBehaviour
 	{
         if(Time.time > attackStart + attackCooldown)
 		{
-            player.TakeDamage(20f);
+            player.TakeDamage(damage);
             attackStart = Time.time;
         }
     }
@@ -115,26 +111,5 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
-    }
-
-    public void UpdateEnemyPosition()
-    {
-        Debug.Log("Updating Position");
-
-        float xPos = this.gameObject.transform.position.x;
-        float zPos = this.gameObject.transform.position.z;
-        float yPos = 0f;
-
-        ray.origin = new Vector3(xPos, maxHeight, zPos);
-        ray.direction = Vector3.down;
-        hit = new RaycastHit();
-
-        if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
-        {
-            yPos = hit.point.y + 1f;
-            Vector3 newPosition = new Vector3(xPos, yPos, zPos);
-
-            this.gameObject.transform.position = newPosition;
-        }
     }
 }

@@ -17,7 +17,7 @@ public class InsideBuilding : MonoBehaviour
 		if(col.gameObject.tag == "Player")
 		{
 			player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-			player.isSafe = true;
+			player.isInside = true;
 			Debug.Log("Player entered Building");
 		}
 	}
@@ -27,7 +27,7 @@ public class InsideBuilding : MonoBehaviour
 		if (col.gameObject.tag == "Player")
 		{
 			player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-			player.isSafe = false;
+			player.isInside = false;
 			Debug.Log("Player left Building");
 		}
 	}

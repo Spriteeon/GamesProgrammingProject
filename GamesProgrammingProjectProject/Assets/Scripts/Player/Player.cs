@@ -23,7 +23,8 @@ public class Player : MonoBehaviour
     public UIBar healthBar;
     public UIBar candleBar;
 
-    public bool isSafe = false;
+    public bool isSafe = true;
+    public bool isInside = false;
 
     Timer candleTimer;
 
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
 
         candle.SetActive(true);
         candleTimer = new Timer(1f);
-        isSafe = false;
+        isSafe = true;
 
         currentHealth = maxHealth;
         healthBar.SetMaxValue(maxHealth);
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour
 
 		if (candleTimer.ExpireReset())
 		{
-			IncreaseCandle(1f);
+			IncreaseCandle(4f);
 		}
 
 		if (pauseMenu.isPaused)
@@ -69,10 +70,18 @@ public class Player : MonoBehaviour
             this.GetComponent<FirstPersonController>().enabled = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.F))
+        if(currentCandle > 0)
 		{
-            SwitchCandle();
-		}
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                SwitchCandle();
+            }
+        }
+        if(currentCandle <= 0)
+		{
+            candle.SetActive(false);
+            isSafe = false;
+        }
 
         if(currentHealth <= 0)
 		{
@@ -113,6 +122,15 @@ public class Player : MonoBehaviour
     void SwitchCandle()
 	{
         candle.SetActive(!candle.activeSelf);
+
+        if(candle.activeSelf)
+		{
+            isSafe = true;
+		}
+        else if (!candle.activeSelf)
+        {
+            isSafe = false;
+        }
     }
 
     public void TakeDamage(float damage)
@@ -126,7 +144,7 @@ public class Player : MonoBehaviour
 
     void IncreaseCandle(float value)
 	{
-        if (isSafe && currentCandle < 100) // Increase Candle
+        if (isInside && currentCandle < 100) // Increase Candle
 		{
             currentCandle += 2 * value;
             if (currentCandle == 99f)
@@ -135,7 +153,7 @@ public class Player : MonoBehaviour
 			}
             candleBar.SetValue(currentCandle);
         }
-        else if (candle.activeSelf && !isSafe && currentCandle >= 0) // Decrease Candle
+        else if (candle.activeSelf && !isInside && currentCandle >= 0) // Decrease Candle
 		{
             currentCandle -= value;
             candleBar.SetValue(currentCandle);

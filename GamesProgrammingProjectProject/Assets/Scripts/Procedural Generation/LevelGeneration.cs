@@ -13,6 +13,9 @@ public class LevelGeneration : MonoBehaviour
 	private GameObject tilePrefab;
 
 	[SerializeField]
+	private GameObject enemyObject;
+
+	[SerializeField]
 	private float centerVertexZ, maxDistanceZ;
 
 	[SerializeField]
@@ -39,11 +42,12 @@ public class LevelGeneration : MonoBehaviour
 	float foliageMin = 0.5f;
 	float foliageMax = 2f;
 
-	[SerializeField]
 	private Player player;
 
-	[SerializeField]
-	private Enemy enemy;
+	//[SerializeField]
+	//private Enemy enemy;
+
+	private int maxEnemies = 10;
 
 	private Vector3[] patrolPoints;
 	private int numPatrolPoints = 10;
@@ -59,6 +63,7 @@ public class LevelGeneration : MonoBehaviour
 
 	void Start()
 	{
+		player = PlayerManager.instance.player.GetComponent<Player>();
 		patrolPoints = new Vector3[numPatrolPoints];
 
 		GenerateTerrainWaves();
@@ -130,12 +135,23 @@ public class LevelGeneration : MonoBehaviour
 			}
 		}
 
+		// Doing first bake for Terrain, needs to be baked before spawning Enemies
+		NavMeshBuilder.BuildNavMesh();
+
 		// Update Player and Enemy Position
 		player.UpdatePlayerPosition();
-		enemy.UpdateEnemyPosition();
+		// enemy.UpdateEnemyPosition();
 
 		GeneratePatrolPoints();
-		enemy.GetPatrolPoints(patrolPoints);
+		for (int i = 0; i < maxEnemies; i++)
+		{
+			// Spawn Enemies
+			// Spawn each enemy on a different patrol point
+			Vector3 enemyPosition = patrolPoints[i];
+			GameObject enemyObject = Instantiate(this.enemyObject, enemyPosition, Quaternion.identity) as GameObject;
+			Enemy enemy = enemyObject.GetComponent<Enemy>();
+			enemy.GetPatrolPoints(patrolPoints);
+		}
 
 		// generate trees for the level
 		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
