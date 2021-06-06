@@ -104,8 +104,18 @@ public class Player : MonoBehaviour
 
         if(col.gameObject.tag == "Well")
 		{
-            SceneManager.LoadScene(3);
+            // Add Screen Fade?
+
+            // Start 2 second Timer then open Win Scene
+            StartCoroutine(WinGame(2f));
         }
+    }
+
+    IEnumerator WinGame(float time)
+	{
+        yield return new WaitForSeconds(time);
+
+        SceneManager.LoadScene(3);
     }
 
     void Die()
