@@ -42,6 +42,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        [SerializeField]
+        private AudioSource m_AudioSource2;
+        [SerializeField] 
+        private AudioClip m_BreathingSound;
+
         // Use this for initialization
         private void Start()
         {
@@ -131,7 +136,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             UpdateCameraPosition(speed);
 
             m_MouseLook.UpdateCursorLock();
-        }
+
+			if (m_IsWalking)
+			{
+				m_AudioSource2.enabled = false;
+			}
+			else if (!m_IsWalking)
+			{
+				m_AudioSource2.enabled = true;
+			}
+
+		}
 
 
         private void PlayJumpSound()
@@ -174,6 +189,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // move picked sound to index 0 so it's not picked next time
             m_FootstepSounds[n] = m_FootstepSounds[0];
             m_FootstepSounds[0] = m_AudioSource.clip;
+
         }
 
 
