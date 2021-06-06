@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
-using UnityEditor.AI;
+//using UnityEditor.AI;
 
 public class LevelGeneration : MonoBehaviour
 {
@@ -139,7 +139,7 @@ public class LevelGeneration : MonoBehaviour
 		}
 
 		// Doing first bake for Terrain, needs to be baked before spawning Enemies
-		NavMeshBuilder.BuildNavMesh();
+		//NavMeshBuilder.BuildNavMesh();
 
 		// Update Player and Enemy Position
 		player.UpdatePlayerPosition();
@@ -165,8 +165,8 @@ public class LevelGeneration : MonoBehaviour
 		// generate items for the level
 		itemGeneration.GenerateItems(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(itemMin, itemMax));
 
-		NavMeshBuilder.ClearAllNavMeshes();
-		NavMeshBuilder.BuildNavMesh();
+		//NavMeshBuilder.ClearAllNavMeshes();
+		//NavMeshBuilder.BuildNavMesh();
 
 	}
 
