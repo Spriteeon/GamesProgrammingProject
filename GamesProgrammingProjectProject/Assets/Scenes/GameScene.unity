@@ -2029,6 +2029,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5791540307385805935, guid: a45e4afd3c8c4c441a42fbafdd66bf14,
         type: 3}
+      propertyPath: m_Speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5791540307385805935, guid: a45e4afd3c8c4c441a42fbafdd66bf14,
+        type: 3}
       propertyPath: m_StoppingDistance
       value: 4
       objectReference: {fileID: 0}

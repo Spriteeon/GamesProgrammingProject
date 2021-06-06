@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour
     private int currentPoint;
     Vector3 randomPatrolPoint;
 
+    private float attackStart = 0f;
+    private float attackCooldown = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,7 +82,11 @@ public class Enemy : MonoBehaviour
 
     void AttackPlayer()
 	{
-        player.TakeDamage(20f);
+        if(Time.time > attackStart + attackCooldown)
+		{
+            player.TakeDamage(20f);
+            attackStart = Time.time;
+        }
     }
 
     void NewPatrol()
