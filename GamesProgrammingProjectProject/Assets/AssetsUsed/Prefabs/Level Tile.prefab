@@ -172,3 +172,6 @@ MonoBehaviour:
   lowTexture: {fileID: 2800000, guid: 91f31a53c9e4471478d66c8dbc6c0e50, type: 3}
   mediumTexture: {fileID: 2800000, guid: 34a39a5c02a1c504297e59f7286779e9, type: 3}
   highTexture: {fileID: 2800000, guid: 64a6534baddd6784bab8cc9b55b4c144, type: 3}
+  lowNormal: {fileID: 2800000, guid: ccf799db29da6fa47a3a596f8a4673e3, type: 3}
+  mediumNormal: {fileID: 2800000, guid: 97a779c990d2e7d40b780da2713e7747, type: 3}
+  highNormal: {fileID: 2800000, guid: c94d2e0a45e92e84f95151d23717ba18, type: 3}

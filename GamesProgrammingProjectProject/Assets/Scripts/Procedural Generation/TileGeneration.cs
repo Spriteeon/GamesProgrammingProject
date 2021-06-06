@@ -27,9 +27,12 @@ public class TileGeneration : MonoBehaviour
 	[SerializeField]
 	private AnimationCurve heightCurve;
 
-	Vector2[] uvs;
-	public Texture lowTexture, mediumTexture, highTexture;
-	Renderer renderer;
+	private Vector2[] uvs;
+	[SerializeField]
+	private Texture lowTexture, mediumTexture, highTexture;
+	[SerializeField]
+	private Texture lowNormal, mediumNormal, highNormal;
+	private Renderer renderer;
 
 	public TileData GenerateTile(float centerVertexZ, float maxDistanceZ, Wave[] waves)
 	{
@@ -63,12 +66,15 @@ public class TileGeneration : MonoBehaviour
 				{
 					case "low":
 						renderer.material.SetTexture("_MainTex", lowTexture);
+						renderer.material.SetTexture("_BumbMap", lowNormal);
 						break;
 					case "medium":
 						renderer.material.SetTexture("_MainTex", mediumTexture);
+						renderer.material.SetTexture("_BumbMap", mediumNormal);
 						break;
 					case "high":
 						renderer.material.SetTexture("_MainTex", highTexture);
+						renderer.material.SetTexture("_BumbMap", highNormal);
 						break;
 					default:
 						break;
