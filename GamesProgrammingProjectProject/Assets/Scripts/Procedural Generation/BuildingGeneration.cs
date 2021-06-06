@@ -31,25 +31,19 @@ public class BuildingGeneration : MonoBehaviour
 		{
 			for (int x = 0; x < levelWidth; x++)
 			{
-				// convert from Level Coordinate System to Tile Coordinate System and retrieve the corresponding TileData
+				// Convert from Level Coordinate System to Tile Coordinate System and retrieve the corresponding TileData
 				TileCoordinate tileCoordinate = levelData.ConvertToTileCoordinate(z, x);
 				TileData tileData = levelData.tilesData[tileCoordinate.tileZ, tileCoordinate.tileX];
 				int tileWidth = tileData.heightMap.GetLength(1);
 
-				// calculate the mesh vertex index
-				//Vector3[] meshVertices = tileData.mesh.vertices;
-				//int vertexIndex = tileCoordinate.coordinateZ * tileWidth + tileCoordinate.coordinateX;
-
-				// get the terrain type of this coordinate
+				// Get the terrain type of this coordinate
 				TerrainType terrainType = tileData.heightTerrainTypes[tileCoordinate.coordinateZ, tileCoordinate.coordinateX];
-				// check if it is a water terrain. Trees cannot be placed over the water
+
 				if (terrainType.name == "low")
 				{
 					float buildingValue = buildingMap[z, x];
 
-					// int terrainTypeIndex = terrainType.index;
-
-					// compares the current tree noise value to the neighbor ones
+					// Compares the current tree noise value to the neighbor ones
 					int neighborZBegin = (int)Mathf.Max(0, z - this.neighborRadius);
 					int neighborZEnd = (int)Mathf.Min(levelDepth - 1, z + this.neighborRadius);
 					int neighborXBegin = (int)Mathf.Max(0, x - this.neighborRadius);
@@ -60,7 +54,6 @@ public class BuildingGeneration : MonoBehaviour
 						for (int neighborX = neighborXBegin; neighborX <= neighborXEnd; neighborX++)
 						{
 							float neighborValue = buildingMap[neighborZ, neighborX];
-							// saves the maximum tree noise value in the radius
 							if (neighborValue >= maxValue)
 							{
 								maxValue = neighborValue;
@@ -68,7 +61,7 @@ public class BuildingGeneration : MonoBehaviour
 						}
 					}
 
-					// if the current tree noise value is the maximum one, place a tree in this location
+					// If the current tree noise value is the maximum one, place a tree in this location
 					if (buildingValue == maxValue)
 					{
 
@@ -86,23 +79,6 @@ public class BuildingGeneration : MonoBehaviour
 						}
 
 						Vector3 buildingPosition = new Vector3(xPos, yPos, zPos);
-
-						// Pick a random tree Prefab
-						//int randNum = Random.Range(1, 4);
-						//switch (randNum)
-						//{
-						//	case 1:
-						//		treePrefab = treePrefab1;
-						//		break;
-						//	case 2:
-						//		treePrefab = treePrefab2;
-						//		break;
-						//	case 3:
-						//		treePrefab = treePrefab3;
-						//		break;
-						//	default:
-						//		break;
-						//}
 
 						float buildingScale = 2.5f;
 

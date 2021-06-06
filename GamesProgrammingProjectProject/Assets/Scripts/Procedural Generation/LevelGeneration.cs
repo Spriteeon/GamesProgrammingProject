@@ -47,9 +47,6 @@ public class LevelGeneration : MonoBehaviour
 
 	private Player player;
 
-	//[SerializeField]
-	//private Enemy enemy;
-
 	private int maxEnemies = 10;
 
 	private Vector3[] patrolPoints;
@@ -95,7 +92,6 @@ public class LevelGeneration : MonoBehaviour
 	private Wave[] GenerateGenericWaves(float min, float max)
 	{
 		// Create random waves for Trees and Terrain
-		//genericWaves = new Wave[3];
 		foreach (Wave wave in genericWaves)
 		{
 			wave.seed = GenerateWaveSeed();
@@ -108,22 +104,22 @@ public class LevelGeneration : MonoBehaviour
 
 	void GenerateMap()
 	{
-		// get the tile dimensions from the tile Prefab
+		// Get the tile dimensions from the tile Prefab
 		Vector3 tileSize = tilePrefab.GetComponent<MeshRenderer>().bounds.size;
 		int tileWidth = (int)tileSize.x;
 		int tileDepth = (int)tileSize.z;
 
-		// calculate the number of vertices of the tile in each axis using its mesh
+		// Calculate the number of vertices of the tile in each axis using its mesh
 		Vector3[] tileMeshVertices = tilePrefab.GetComponent<MeshFilter>().sharedMesh.vertices;
 		int tileDepthVert = (int)Mathf.Sqrt(tileMeshVertices.Length);
 		int tileWidthVert = tileDepthVert;
 
 		float distanceBetweenVertices = (float)tileDepth / (float)tileDepthVert;
 
-		// build an empty LevelData object, to be filled with the tiles to be generated
+		// Build an empty LevelData object, to be filled with the tiles to be generated
 		LevelData levelData = new LevelData(tileDepthVert, tileWidthVert, this.mapDepthInTiles, this.mapWidthInTiles);
 
-		// for each Tile, instantiate a Tile in the correct position
+		// For each Tile, instantiate a Tile in the correct position
 		int surfaceIndex = 0;
 		for (int xTile = 0; xTile < mapWidthInTiles; xTile++)
 		{
@@ -146,12 +142,10 @@ public class LevelGeneration : MonoBehaviour
 		}
 
 		// Doing first bake for Terrain, needs to be baked before spawning Enemies
-		//NavMeshBuilder.BuildNavMesh();
 		baker.Bake();
 
-		// Update Player and Enemy Position
+		// Update Player Position
 		player.UpdatePlayerPosition();
-		// enemy.UpdateEnemyPosition();
 
 		GeneratePatrolPoints();
 		for (int i = 0; i < maxEnemies; i++)
@@ -164,17 +158,16 @@ public class LevelGeneration : MonoBehaviour
 			enemy.GetPatrolPoints(patrolPoints);
 		}
 
-		// generate trees for the level
+		// Generate trees for the level
 		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
-		// generate trees for the level
+		// Generate trees for the level
 		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(treeMin, treeMax));
-		// generate foliage for the level
+		// Generate foliage for the level
 		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(foliageMin, foliageMax));
-		// generate items for the level
+		// Generate items for the level
 		itemGeneration.GenerateItems(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(itemMin, itemMax));
 
-		//NavMeshBuilder.ClearAllNavMeshes();
-		//NavMeshBuilder.BuildNavMesh();
+		// Final NavMesh bake
 		baker.Bake();
 
 	}
@@ -183,11 +176,6 @@ public class LevelGeneration : MonoBehaviour
 	{
 		for(int i = 0; i < numPatrolPoints; i++)
 		{
-
-			// Get a random x, y value inside level boundary
-			//Vector2 randomPoint = Random.insideUnitCircle.normalized * 170f;
-			//Vector3 randomPoint3D = new Vector3(randomPoint.x, 0f, randomPoint.y);
-			//Vector3 actualPoint = randomPoint3D + mapCentre;
 
 			Vector3 randomPoint = mapCentre;
 			randomPoint.x += Random.Range(-playableMapRadius, playableMapRadius);
@@ -206,8 +194,6 @@ public class LevelGeneration : MonoBehaviour
 				patrolPoints[i] = patrolPointPosition;
 
 				GameObject patrolPointDebug = Instantiate(this.debugObject, patrolPointPosition, Quaternion.identity) as GameObject;
-				//tree.transform.localScale = new Vector3(treeScale, treeScale, treeScale);
-				//tree.transform.Rotate(0.0f, yRotation, 0.0f);
 			}
 		}
 	}
@@ -248,11 +234,9 @@ public class LevelData
 
 	public TileCoordinate ConvertToTileCoordinate(int z, int x)
 	{
-		// the tile index is calculated by dividing the index by the number of tiles in that axis
+		// Converting the Level Coordinate to the tile coordinate
 		int tileZIndex = (int)Mathf.Floor((float)z / (float)this.tileDepthVert);
 		int tileXIndex = (int)Mathf.Floor((float)x / (float)this.tileWidthVert);
-		// the coordinate index is calculated by getting the remainder of the division above
-		// we also need to translate the origin to the bottom left corner
 		int coordinateZIndex = this.tileDepthVert - (z % this.tileDepthVert) - 1;
 		int coordinateXIndex = this.tileWidthVert - (x % this.tileDepthVert) - 1;
 
