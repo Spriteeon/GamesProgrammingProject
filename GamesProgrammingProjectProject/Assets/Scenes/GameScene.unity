@@ -2114,7 +2114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noiseMapGeneration: {fileID: 2052644496}
   levelScale: 10
-  neighborRadius: 1
+  neighborRadius: 10
   healthItem: {fileID: 8289176533287537696, guid: 8a0b10c54fd19e948b2ed0beabfaec86,
     type: 3}
   candleItem: {fileID: 2018525906973981529, guid: 17cdc7af8fe8a5244b4da7b876a45c46,
