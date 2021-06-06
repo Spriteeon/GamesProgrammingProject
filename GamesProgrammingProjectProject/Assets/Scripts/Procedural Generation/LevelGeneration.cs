@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
-//using UnityEditor.AI;
+using UnityEngine.AI;
 
 public class LevelGeneration : MonoBehaviour
 {
@@ -64,6 +64,9 @@ public class LevelGeneration : MonoBehaviour
 	[SerializeField]
 	private GameObject debugObject;
 
+	[SerializeField]
+	private NavigationBaker baker;
+
 	void Start()
 	{
 		player = PlayerManager.instance.player.GetComponent<Player>();
@@ -121,6 +124,7 @@ public class LevelGeneration : MonoBehaviour
 		LevelData levelData = new LevelData(tileDepthVert, tileWidthVert, this.mapDepthInTiles, this.mapWidthInTiles);
 
 		// for each Tile, instantiate a Tile in the correct position
+		int surfaceIndex = 0;
 		for (int xTile = 0; xTile < mapWidthInTiles; xTile++)
 		{
 			for (int zTile = 0; zTile < mapDepthInTiles; zTile++)
@@ -132,6 +136,9 @@ public class LevelGeneration : MonoBehaviour
 				// instantiate a new Tile
 				GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
 
+				//baker.surfaces[surfaceIndex] = tile.GetComponent<NavMeshSurface>();
+				//surfaceIndex++;
+
 				// generate the Tile texture and save it in the levelData
 				TileData tileData = tile.GetComponent<TileGeneration>().GenerateTile(centerVertexZ, maxDistanceZ, terrainWaves);
 				levelData.AddTileData(tileData, zTile, xTile);
@@ -140,6 +147,7 @@ public class LevelGeneration : MonoBehaviour
 
 		// Doing first bake for Terrain, needs to be baked before spawning Enemies
 		//NavMeshBuilder.BuildNavMesh();
+		baker.Bake();
 
 		// Update Player and Enemy Position
 		player.UpdatePlayerPosition();
@@ -167,6 +175,7 @@ public class LevelGeneration : MonoBehaviour
 
 		//NavMeshBuilder.ClearAllNavMeshes();
 		//NavMeshBuilder.BuildNavMesh();
+		baker.Bake();
 
 	}
 
