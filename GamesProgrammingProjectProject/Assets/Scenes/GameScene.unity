@@ -1805,6 +1805,16 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1148783750}
+    - target: {fileID: 2870598065669831554, guid: e5fb527963455fb4b82173586fec9cb1,
+        type: 3}
+      propertyPath: m_RunSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2870598065669831554, guid: e5fb527963455fb4b82173586fec9cb1,
+        type: 3}
+      propertyPath: m_WalkSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2870598065675308642, guid: e5fb527963455fb4b82173586fec9cb1,
         type: 3}
       propertyPath: m_Name
@@ -2049,6 +2059,7 @@ MonoBehaviour:
     type: 3}
   enemyObject: {fileID: 5791540307385805923, guid: a45e4afd3c8c4c441a42fbafdd66bf14,
     type: 3}
+  wellPrefab: {fileID: 100002, guid: 86e9f6bb23445c2418abce9d418b64a9, type: 3}
   centerVertexZ: 205
   maxDistanceZ: 205
   treeGeneration: {fileID: 2052644497}

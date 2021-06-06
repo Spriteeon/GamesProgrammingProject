@@ -101,6 +101,11 @@ public class Player : MonoBehaviour
 		{
             col.gameObject.GetComponent<CandleItem>().Interact();
         }
+
+        if(col.gameObject.tag == "Well")
+		{
+            SceneManager.LoadScene(3);
+        }
     }
 
     void Die()

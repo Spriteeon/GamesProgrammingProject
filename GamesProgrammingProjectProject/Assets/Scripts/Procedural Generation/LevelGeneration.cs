@@ -11,9 +11,10 @@ public class LevelGeneration : MonoBehaviour
 
 	[SerializeField]
 	private GameObject tilePrefab;
-
 	[SerializeField]
 	private GameObject enemyObject;
+	[SerializeField]
+	private GameObject wellPrefab;
 
 	[SerializeField]
 	private float centerVertexZ, maxDistanceZ;
@@ -158,6 +159,9 @@ public class LevelGeneration : MonoBehaviour
 			enemy.GetPatrolPoints(patrolPoints);
 		}
 
+		// Spawn 'Well'
+		SpawnWell();
+
 		// Generate trees for the level
 		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
 		// Generate trees for the level
@@ -169,6 +173,44 @@ public class LevelGeneration : MonoBehaviour
 
 		// Final NavMesh bake
 		baker.Bake();
+
+	}
+
+	private void SpawnWell()
+	{
+		float distanceFromPoint = 5f;
+		int randomIndex = Random.Range(0, patrolPoints.Length);
+		Vector3 patrolPosition = patrolPoints[randomIndex];
+		Vector3 directionToCentre = (mapCentre - patrolPosition).normalized;
+
+		Vector3 wellPosition = patrolPosition + (directionToCentre * distanceFromPoint);
+
+		// Check if on ground
+		ray.origin = new Vector3(wellPosition.x, maxHeight, wellPosition.z);
+		ray.direction = Vector3.down;
+		hit = new RaycastHit();
+
+		while(Physics.Raycast(ray, out hit) && hit.transform.tag != "Floor")
+		{
+			distanceFromPoint += 5f;
+			wellPosition = patrolPosition + (directionToCentre * distanceFromPoint);
+
+			ray.origin = new Vector3(wellPosition.x, maxHeight, wellPosition.z);
+			ray.direction = Vector3.down;
+			hit = new RaycastHit();
+		}
+
+		if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
+		{
+			float yPos = hit.point.y - 0.5f;
+
+			Vector3 newWellPosition = new Vector3(wellPosition.x, yPos, wellPosition.z);
+
+			float yRotation = Random.Range(-180.0f, 180.0f);
+
+			GameObject well = Instantiate(this.wellPrefab, newWellPosition, Quaternion.identity) as GameObject;
+			well.transform.Rotate(0.0f, yRotation, 0.0f);
+		}
 
 	}
 

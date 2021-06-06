@@ -7,6 +7,7 @@ TagManager:
   - CandleItem
   - HealthItem
   - Floor
+  - Well
   layers:
   - Default
   - TransparentFX
