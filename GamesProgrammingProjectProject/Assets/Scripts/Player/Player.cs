@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
 
     void Die()
 	{
-        SceneManager.LoadScene("LoseScene");
+        SceneManager.LoadScene(4);
     }
 
     public void UpdatePlayerPosition()
@@ -117,8 +117,11 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
 	{
-        currentHealth -= damage;
-        healthBar.SetValue(currentHealth);
+        if(!isSafe)
+		{
+            currentHealth -= damage;
+            healthBar.SetValue(currentHealth);
+        }
 	}
 
     void IncreaseCandle(float value)

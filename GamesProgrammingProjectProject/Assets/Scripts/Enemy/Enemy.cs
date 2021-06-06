@@ -49,8 +49,9 @@ public class Enemy : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
 
-        if (distanceToPlayer <= lookRadius)
+        if (distanceToPlayer <= lookRadius && !player.isSafe)
         {
+            pointReached = true;
             agent.SetDestination(target.position);
 
             if (distanceToPlayer <= agent.stoppingDistance)
