@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -72,6 +73,16 @@ public class Player : MonoBehaviour
 		{
             SwitchCandle();
 		}
+
+        if(currentHealth <= 0)
+		{
+            Die();
+		}
+    }
+
+    void Die()
+	{
+        SceneManager.LoadScene("LoseScene");
     }
 
     public void UpdatePlayerPosition()
