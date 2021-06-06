@@ -13,7 +13,6 @@ public class TileGeneration : MonoBehaviour
 
 	[SerializeField]
 	private MeshFilter meshFilter;
-
 	[SerializeField]
 	private MeshCollider meshCollider;
 
@@ -25,26 +24,12 @@ public class TileGeneration : MonoBehaviour
 
 	[SerializeField]
 	private float heightMultiplier;
-
 	[SerializeField]
 	private AnimationCurve heightCurve;
-
-	//[SerializeField]
-	//private Wave[] wavestwo;
-
-	//void Start()
-	//{
-	//	GenerateTile();
-	//}
 
 	Vector2[] uvs;
 	public Texture lowTexture, mediumTexture, highTexture;
 	Renderer renderer;
-
-	//private Wave[] GenerateWaves()
-	//{
-	//	return wavestwo;
-	//}
 
 	public TileData GenerateTile(float centerVertexZ, float maxDistanceZ, Wave[] waves)
 	{

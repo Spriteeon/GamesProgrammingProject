@@ -20,12 +20,12 @@ public class LevelGeneration : MonoBehaviour
 
 	[SerializeField]
 	private TreeGeneration treeGeneration;
-
 	[SerializeField]
 	private FoliageGeneration foliageGeneration;
-
 	[SerializeField]
 	private BuildingGeneration buildingGeneration;
+	[SerializeField]
+	private ItemGeneration itemGeneration;
 
 	[SerializeField]
 	private Wave[] terrainWaves;
@@ -41,6 +41,9 @@ public class LevelGeneration : MonoBehaviour
 
 	float foliageMin = 0.5f;
 	float foliageMax = 2f;
+
+	float itemMin = 0.5f;
+	float itemMax = 2f;
 
 	private Player player;
 
@@ -155,12 +158,12 @@ public class LevelGeneration : MonoBehaviour
 
 		// generate trees for the level
 		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
-
 		// generate trees for the level
 		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(treeMin, treeMax));
-
 		// generate foliage for the level
 		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(foliageMin, foliageMax));
+		// generate items for the level
+		itemGeneration.GenerateItems(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(itemMin, itemMax));
 
 		NavMeshBuilder.ClearAllNavMeshes();
 		NavMeshBuilder.BuildNavMesh();

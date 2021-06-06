@@ -9,13 +9,11 @@ public class FoliageGeneration : MonoBehaviour
 
 	[SerializeField]
 	private float levelScale;
-
 	[SerializeField]
 	private float neighborRadius;
 
 	[SerializeField]
 	private GameObject foliagePrefab1;
-
 	[SerializeField]
 	private GameObject foliagePrefab2;
 

@@ -56,7 +56,10 @@ public class Enemy : MonoBehaviour
                 FaceTarget();
 
                 // Attack Player
-                AttackPlayer();
+                if(!player.isSafe)
+				{
+                    AttackPlayer();
+                }
             }
         }
         else

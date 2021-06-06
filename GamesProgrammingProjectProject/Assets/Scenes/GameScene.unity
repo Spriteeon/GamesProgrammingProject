@@ -572,7 +572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1960,8 +1960,9 @@ GameObject:
   - component: {fileID: 2052644494}
   - component: {fileID: 2052644497}
   - component: {fileID: 2052644498}
-  - component: {fileID: 2052644496}
   - component: {fileID: 2052644499}
+  - component: {fileID: 2052644500}
+  - component: {fileID: 2052644496}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -1992,6 +1993,7 @@ MonoBehaviour:
   treeGeneration: {fileID: 2052644497}
   foliageGeneration: {fileID: 2052644498}
   buildingGeneration: {fileID: 2052644499}
+  itemGeneration: {fileID: 2052644500}
   terrainWaves:
   - seed: 0
     frequency: 0
@@ -2097,4 +2099,23 @@ MonoBehaviour:
   levelScale: 10
   neighborRadius: 20
   buildingPrefab: {fileID: 2132546811012272379, guid: c5d835fb6684e234982cf4eb856c7114,
+    type: 3}
+--- !u!114 &2052644500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052644493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d69dcbfe8ff834140b1ade539927ba23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseMapGeneration: {fileID: 2052644496}
+  levelScale: 10
+  neighborRadius: 1
+  healthItem: {fileID: 8289176533287537696, guid: 8a0b10c54fd19e948b2ed0beabfaec86,
+    type: 3}
+  candleItem: {fileID: 2018525906973981529, guid: 17cdc7af8fe8a5244b4da7b876a45c46,
     type: 3}

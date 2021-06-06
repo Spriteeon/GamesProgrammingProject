@@ -56,11 +56,7 @@ public class Player : MonoBehaviour
     {
         position = this.gameObject.transform.position;
 
-		if (candleTimer.ExpireReset())
-		{
-			IncreaseCandle(4f);
-		}
-
+        // Pause Menu
 		if (pauseMenu.isPaused)
 		{
             this.GetComponent<FirstPersonController>().enabled = false;
@@ -70,7 +66,12 @@ public class Player : MonoBehaviour
             this.GetComponent<FirstPersonController>().enabled = true;
         }
 
-        if(currentCandle > 0)
+        // Candle Functionality
+        if (candleTimer.ExpireReset())
+        {
+            AutoCandle(4f);
+        }
+        if (currentCandle > 0)
 		{
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -83,10 +84,23 @@ public class Player : MonoBehaviour
             isSafe = false;
         }
 
+        // Health Functionality
         if(currentHealth <= 0)
 		{
             Die();
 		}
+    }
+
+    void OnTriggerEnter(Collider col)
+	{
+        if(col.gameObject.tag == "HealthItem")
+		{
+            col.gameObject.GetComponent<HealthItem>().Interact();
+        }
+        if (col.gameObject.tag == "CandleItem")
+		{
+            col.gameObject.GetComponent<CandleItem>().Interact();
+        }
     }
 
     void Die()
@@ -133,16 +147,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void IncreaseCandle(float value)
 	{
-        if(!isSafe)
-		{
-            currentHealth -= damage;
-            healthBar.SetValue(currentHealth);
-        }
+        currentCandle += value;
+        candleBar.SetValue(currentCandle);
 	}
 
-    void IncreaseCandle(float value)
+    public void TakeDamage(float damage)
+	{
+        currentHealth -= damage;
+        healthBar.SetValue(currentHealth);
+    }
+
+    void AutoCandle(float value)
 	{
         if (isInside && currentCandle < 100) // Increase Candle
 		{

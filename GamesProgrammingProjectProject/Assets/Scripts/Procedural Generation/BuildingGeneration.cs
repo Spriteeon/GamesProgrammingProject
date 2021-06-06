@@ -9,7 +9,6 @@ public class BuildingGeneration : MonoBehaviour
 
 	[SerializeField]
 	private float levelScale;
-
 	[SerializeField]
 	private float neighborRadius;
 

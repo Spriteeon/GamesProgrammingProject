@@ -9,16 +9,13 @@ public class TreeGeneration : MonoBehaviour
 
 	[SerializeField]
 	private float levelScale;
-
 	[SerializeField]
 	private float neighborRadius;
 
 	[SerializeField]
 	private GameObject treePrefab1;
-
 	[SerializeField]
 	private GameObject treePrefab2;
-
 	[SerializeField]
 	private GameObject treePrefab3;
 
