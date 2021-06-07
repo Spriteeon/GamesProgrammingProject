@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour
 	{
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
+
+		// Reset Generation Values
+		GlobalControl.instance.ResetValues();
 	}
 
 	public void PlayGame()

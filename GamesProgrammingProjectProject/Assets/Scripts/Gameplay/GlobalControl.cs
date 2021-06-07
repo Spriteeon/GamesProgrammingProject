@@ -13,6 +13,13 @@ public class GlobalControl : MonoBehaviour
     public bool isItems = true;
     public bool isEnemies = true;
 
+    public float terrainFreqAmp = 1f;
+    public float treesFreqAmp = 1f;
+    public float foliageFreqAmp = 1f;
+    public float buildingsFreqAmp = 0.5f;
+    public float itemsFreqAmp = 1f;
+    public int numEnemies = 10;
+
     void Awake()
     {
         if (instance == null)
@@ -24,5 +31,22 @@ public class GlobalControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void ResetValues()
+	{
+        customGame = false;
+        isTrees = true;
+        isFoliage = true;
+        isBuildings = true;
+        isItems = true;
+        isEnemies = true;
+
+        terrainFreqAmp = 1f;
+        treesFreqAmp = 1f;
+        foliageFreqAmp = 1f;
+        buildingsFreqAmp = 0.5f;
+        itemsFreqAmp = 1f;
+        numEnemies = 10;
     }
 }

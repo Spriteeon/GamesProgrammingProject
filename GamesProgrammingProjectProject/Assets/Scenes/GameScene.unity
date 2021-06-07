@@ -1770,6 +1770,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customGame: 0
+  isTrees: 0
+  isFoliage: 0
+  isBuildings: 0
+  isItems: 0
+  isEnemies: 0
+  treesFreqAmp: 0
+  foliageFreqAmp: 0
+  buildingsFreqAmp: 0
+  itemsFreqAmp: 0
+  numEnemies: 0
 --- !u!4 &1808833824
 Transform:
   m_ObjectHideFlags: 0
@@ -2089,6 +2099,46 @@ MonoBehaviour:
   - seed: 0
     frequency: 0
     amplitude: 0
+  treeWaves:
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  foliageWaves:
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  itemWaves:
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  buildingWaves:
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
+  - seed: 0
+    frequency: 0
+    amplitude: 0
   genericWaves:
   - seed: 0
     frequency: 0
@@ -2183,7 +2233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noiseMapGeneration: {fileID: 2052644496}
   levelScale: 10
-  neighborRadius: 20
+  neighborRadius: 10
   buildingPrefab: {fileID: 2132546811012272379, guid: c5d835fb6684e234982cf4eb856c7114,
     type: 3}
 --- !u!114 &2052644500
