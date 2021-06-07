@@ -48,7 +48,7 @@ public class LevelGeneration : MonoBehaviour
 	float foliageMin = 0.5f;
 	float foliageMax = 2f;
 	float itemMin = 0.5f;
-	float itemMax = 2f;
+	float itemMax = 1f;
 
 	private Player player;
 	private bool customGame;
@@ -64,7 +64,7 @@ public class LevelGeneration : MonoBehaviour
 	private float buildingsFreqAmp;
 	private float itemsFreqAmp;
 
-	private int maxEnemies = 10;
+	private int numEnemies = 5;
 
 	private Vector3[] patrolPoints;
 	private int numPatrolPoints = 10;
@@ -108,7 +108,7 @@ public class LevelGeneration : MonoBehaviour
 			foliageFreqAmp = GlobalControl.instance.foliageFreqAmp;
 			buildingsFreqAmp = GlobalControl.instance.buildingsFreqAmp;
 			itemsFreqAmp = GlobalControl.instance.itemsFreqAmp;
-			maxEnemies = GlobalControl.instance.numEnemies;
+			numEnemies = GlobalControl.instance.numEnemies;
 		}
 
 		GenerateTerrainWaves();
@@ -163,7 +163,7 @@ public class LevelGeneration : MonoBehaviour
 		GeneratePatrolPoints();
 		if(isEnemies)
 		{
-			for (int i = 0; i < maxEnemies; i++)
+			for (int i = 0; i < numEnemies; i++)
 			{
 				// Spawn Enemies
 				// Spawn each enemy on a different patrol point

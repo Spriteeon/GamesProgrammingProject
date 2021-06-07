@@ -18,8 +18,8 @@ public class GlobalControl : MonoBehaviour
     public float treesFreqAmp = 1f;
     public float foliageFreqAmp = 1f;
     public float buildingsFreqAmp = 0.5f;
-    public float itemsFreqAmp = 1f;
-    public int numEnemies = 10;
+    public float itemsFreqAmp = 0.5f;
+    public int numEnemies = 5;
 
     void Awake()
     {
@@ -47,7 +47,7 @@ public class GlobalControl : MonoBehaviour
         treesFreqAmp = 1f;
         foliageFreqAmp = 1f;
         buildingsFreqAmp = 0.5f;
-        itemsFreqAmp = 1f;
-        numEnemies = 10;
+        itemsFreqAmp = 0.5f;
+        numEnemies = 5;
     }
 }
