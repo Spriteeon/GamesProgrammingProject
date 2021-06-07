@@ -2233,7 +2233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseMapGeneration: {fileID: 2052644496}
-  levelScale: 10
+  levelScale: 15
   neighborRadius: 10
   buildingPrefab: {fileID: 2132546811012272379, guid: c5d835fb6684e234982cf4eb856c7114,
     type: 3}
