@@ -47,6 +47,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] 
         private AudioClip m_BreathingSound;
 
+        public CharacterController characterController
+		{
+			get
+			{
+                return m_CharacterController;
+			}
+		}
+
+        public bool isTired = false;
+
         // Use this for initialization
         private void Start()
         {
@@ -66,6 +76,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
+
+            if(isTired)
+			{
+                m_RunSpeed = m_WalkSpeed;
+			}
+            else if(!isTired)
+			{
+                m_RunSpeed = 7f;
+			}
+
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    private FirstPersonController controller;
     public Vector3 position;
 
     [SerializeField]
@@ -18,7 +19,11 @@ public class Player : MonoBehaviour
     public float maxCandle = 100f;
     public float currentCandle;
 
-    float stamina;
+    private bool isRunning = false;
+    public float maxStamina = 100f;
+    public float currentStamina;
+    private float staminaDrain = 20f;
+    private float tiredPoint = 20f;
 
     public UIBar healthBar;
     public UIBar candleBar;
@@ -35,6 +40,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controller = GameObject.FindObjectOfType<FirstPersonController>();
 
         candle.SetActive(true);
         candleTimer = new Timer(1f);
@@ -46,7 +52,7 @@ public class Player : MonoBehaviour
         currentCandle = maxCandle;
         candleBar.SetMaxValue(maxCandle);
 
-        stamina = 100f;
+        currentStamina = maxStamina;
 
         position = this.gameObject.transform.position;
     }
@@ -54,6 +60,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateStamina(staminaDrain);
+
         position = this.gameObject.transform.position;
 
         // Pause Menu
@@ -91,6 +99,44 @@ public class Player : MonoBehaviour
 		}
     }
 
+    // Drains Stamina when Player is running but recharges it when Player is not
+    void UpdateStamina(float value)
+	{
+        isRunning = Input.GetKey(KeyCode.LeftShift);
+        
+        if(currentStamina < tiredPoint && !controller.isTired)
+		{
+            controller.isTired = true;
+		}
+        else
+		{
+            StartCoroutine(StopTired(2f));
+		}
+        
+        if (isRunning)
+        {
+            if(currentStamina > 0f)
+			{
+                currentStamina -= Time.deltaTime * value;
+                if(currentStamina < 0f)
+				{
+                    currentStamina = 0f;
+				}
+            }
+        }
+        else if(!isRunning)
+		{
+            if(currentStamina < maxStamina)
+			{
+                currentStamina += Time.deltaTime * (value);
+                if(currentStamina > maxStamina)
+				{
+                    currentStamina = maxStamina;
+				}
+            }
+        }
+    }
+
     void OnTriggerEnter(Collider col)
 	{
         if(col.gameObject.tag == "HealthItem")
@@ -109,6 +155,13 @@ public class Player : MonoBehaviour
             // Start 2 second Timer then open Win Scene
             StartCoroutine(WinGame(2f));
         }
+    }
+
+    IEnumerator StopTired(float time)
+	{
+        yield return new WaitForSeconds(time);
+
+        controller.isTired = false;
     }
 
     IEnumerator WinGame(float time)
