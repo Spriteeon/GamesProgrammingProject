@@ -47,6 +47,7 @@ public class LevelGeneration : MonoBehaviour
 	float itemMax = 2f;
 
 	private Player player;
+	private bool customGame;
 
 	private int maxEnemies = 10;
 
@@ -68,6 +69,7 @@ public class LevelGeneration : MonoBehaviour
 	void Start()
 	{
 		player = PlayerManager.instance.player.GetComponent<Player>();
+		customGame = GlobalControl.instance.customGame;
 		patrolPoints = new Vector3[numPatrolPoints];
 
 		GenerateTerrainWaves();
@@ -76,28 +78,42 @@ public class LevelGeneration : MonoBehaviour
 
 	private void GenerateTerrainWaves()
 	{
-		// Create random waves
-		terrainWaves[0].seed = GenerateWaveSeed();
-		terrainWaves[0].frequency = 1f;
-		terrainWaves[0].amplitude = 2f;
+		if(!customGame)
+		{
+			// Create random waves
+			terrainWaves[0].seed = GenerateWaveSeed();
+			terrainWaves[0].frequency = 1f;
+			terrainWaves[0].amplitude = 2f;
 
-		terrainWaves[1].seed = GenerateWaveSeed();
-		terrainWaves[1].frequency = 0.5f;
-		terrainWaves[1].amplitude = 2f;
+			terrainWaves[1].seed = GenerateWaveSeed();
+			terrainWaves[1].frequency = 0.5f;
+			terrainWaves[1].amplitude = 2f;
 
-		terrainWaves[2].seed = GenerateWaveSeed();
-		terrainWaves[2].frequency = 0.5f;
-		terrainWaves[2].amplitude = 4f;
+			terrainWaves[2].seed = GenerateWaveSeed();
+			terrainWaves[2].frequency = 0.5f;
+			terrainWaves[2].amplitude = 4f;
+		}
+		else
+		{
+			// Seeding stuff
+		}
 	}
 
 	private Wave[] GenerateGenericWaves(float min, float max)
 	{
-		// Create random waves for Trees and Terrain
-		foreach (Wave wave in genericWaves)
+		if (!customGame)
 		{
-			wave.seed = GenerateWaveSeed();
-			wave.frequency = GenerateFreqAmp(min, max);
-			wave.amplitude = GenerateFreqAmp(min, max);
+			// Create random waves for Trees and Terrain
+			foreach (Wave wave in genericWaves)
+			{
+				wave.seed = GenerateWaveSeed();
+				wave.frequency = GenerateFreqAmp(min, max);
+				wave.amplitude = GenerateFreqAmp(min, max);
+			}
+		}
+		else
+		{
+			// Seeding stuff
 		}
 
 		return genericWaves;

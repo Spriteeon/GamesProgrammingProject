@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class GlobalControl : MonoBehaviour
 {
-    public static GlobalControl Instance;
+    public static GlobalControl instance;
+
+    public bool customGame = false;
 
     void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            Instance = this;
+            instance = this;
         }
-        else if (Instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
