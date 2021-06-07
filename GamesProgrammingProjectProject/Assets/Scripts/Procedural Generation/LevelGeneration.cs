@@ -69,7 +69,7 @@ public class LevelGeneration : MonoBehaviour
 	private Vector3[] patrolPoints;
 	private int numPatrolPoints = 10;
 	private Vector3 mapCentre = new Vector3(190f, 0f, 190f);
-	private float playableMapRadius = 170f;
+	private float playableMapRadius = 150f;
 
 	RaycastHit hit;
 	float maxHeight = 20f;

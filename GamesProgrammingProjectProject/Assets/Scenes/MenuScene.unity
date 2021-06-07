@@ -6552,7 +6552,7 @@ MonoBehaviour:
   terrainFreqAmp: 1
   treesFreqAmp: 1
   foliageFreqAmp: 1
-  buildingsFreqAmp: 1
+  buildingsFreqAmp: 0.5
   itemsFreqAmp: 1
   numEnemies: 10
 --- !u!4 &1825612984
