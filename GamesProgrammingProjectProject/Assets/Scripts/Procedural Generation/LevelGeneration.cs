@@ -30,19 +30,15 @@ public class LevelGeneration : MonoBehaviour
 
 	[SerializeField]
 	private Wave[] terrainWaves;
-
 	[SerializeField]
 	private Wave[] genericWaves;
 
 	float buildingMin = 0.5f;
 	float buildingMax = 2f;
-
 	float treeMin = 0.5f;
 	float treeMax = 2f;
-
 	float foliageMin = 0.5f;
 	float foliageMax = 2f;
-
 	float itemMin = 0.5f;
 	float itemMax = 2f;
 
