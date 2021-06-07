@@ -690,7 +690,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.2
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1108,6 +1108,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customGame: 0
+  isTrees: 1
+  isFoliage: 1
+  isBuildings: 1
+  isItems: 1
+  isEnemies: 1
 --- !u!4 &1825612984
 Transform:
   m_ObjectHideFlags: 0
