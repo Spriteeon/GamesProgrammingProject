@@ -44,6 +44,11 @@ public class LevelGeneration : MonoBehaviour
 
 	private Player player;
 	private bool customGame;
+	public bool isTrees;
+	public bool isFoliage;
+	public bool isBuildings;
+	public bool isItems;
+	public bool isEnemies;
 
 	private int maxEnemies = 10;
 
@@ -68,51 +73,25 @@ public class LevelGeneration : MonoBehaviour
 		customGame = GlobalControl.instance.customGame;
 		patrolPoints = new Vector3[numPatrolPoints];
 
-		GenerateTerrainWaves();
-		GenerateMap();
-	}
-
-	private void GenerateTerrainWaves()
-	{
 		if(!customGame)
 		{
-			// Create random waves
-			terrainWaves[0].seed = GenerateWaveSeed();
-			terrainWaves[0].frequency = 1f;
-			terrainWaves[0].amplitude = 2f;
-
-			terrainWaves[1].seed = GenerateWaveSeed();
-			terrainWaves[1].frequency = 0.5f;
-			terrainWaves[1].amplitude = 2f;
-
-			terrainWaves[2].seed = GenerateWaveSeed();
-			terrainWaves[2].frequency = 0.5f;
-			terrainWaves[2].amplitude = 4f;
+			isTrees = true;
+			isFoliage = true;
+			isBuildings = true;
+			isItems = true;
+			isEnemies = true;
 		}
-		else
+		else if(customGame)
 		{
-			// Seeding stuff
-		}
-	}
-
-	private Wave[] GenerateGenericWaves(float min, float max)
-	{
-		if (!customGame)
-		{
-			// Create random waves for Trees and Terrain
-			foreach (Wave wave in genericWaves)
-			{
-				wave.seed = GenerateWaveSeed();
-				wave.frequency = GenerateFreqAmp(min, max);
-				wave.amplitude = GenerateFreqAmp(min, max);
-			}
-		}
-		else
-		{
-			// Seeding stuff
+			isTrees = GlobalControl.instance.isTrees;
+			isFoliage = GlobalControl.instance.isFoliage;
+			isBuildings = GlobalControl.instance.isBuildings;
+			isItems = GlobalControl.instance.isItems;
+			isEnemies = GlobalControl.instance.isEnemies;
 		}
 
-		return genericWaves;
+		GenerateTerrainWaves();
+		GenerateMap();
 	}
 
 	void GenerateMap()
@@ -161,31 +140,111 @@ public class LevelGeneration : MonoBehaviour
 		player.UpdatePlayerPosition();
 
 		GeneratePatrolPoints();
-		for (int i = 0; i < maxEnemies; i++)
+		if(isEnemies)
 		{
-			// Spawn Enemies
-			// Spawn each enemy on a different patrol point
-			Vector3 enemyPosition = patrolPoints[i];
-			GameObject enemyObject = Instantiate(this.enemyObject, enemyPosition, Quaternion.identity) as GameObject;
-			Enemy enemy = enemyObject.GetComponent<Enemy>();
-			enemy.GetPatrolPoints(patrolPoints);
+			for (int i = 0; i < maxEnemies; i++)
+			{
+				// Spawn Enemies
+				// Spawn each enemy on a different patrol point
+				Vector3 enemyPosition = patrolPoints[i];
+				GameObject enemyObject = Instantiate(this.enemyObject, enemyPosition, Quaternion.identity) as GameObject;
+				Enemy enemy = enemyObject.GetComponent<Enemy>();
+				enemy.GetPatrolPoints(patrolPoints);
+			}
 		}
 
 		// Spawn 'Well'
 		SpawnWell();
 
-		// Generate trees for the level
-		buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
-		// Generate trees for the level
-		treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(treeMin, treeMax));
-		// Generate foliage for the level
-		foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(foliageMin, foliageMax));
-		// Generate items for the level
-		itemGeneration.GenerateItems(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(itemMin, itemMax));
+		if(isBuildings)
+		{
+			// Generate trees for the level
+			buildingGeneration.GenerateBuildings(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(buildingMin, buildingMax));
+		}
+		if(isTrees)
+		{
+			// Generate trees for the level
+			treeGeneration.GenerateTrees(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(treeMin, treeMax));
+		}
+		if(isFoliage)
+		{
+			// Generate foliage for the level
+			foliageGeneration.GenerateFoliage(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(foliageMin, foliageMax));
+		}
+		if(isItems)
+		{
+			// Generate items for the level
+			itemGeneration.GenerateItems(this.mapDepthInTiles * tileDepthVert, this.mapWidthInTiles * tileWidthVert, distanceBetweenVertices, levelData, GenerateGenericWaves(itemMin, itemMax));
+		}
 
 		// Final NavMesh bake
 		baker.Bake();
 
+	}
+
+	private void GenerateTerrainWaves()
+	{
+		if (!customGame)
+		{
+			// Create random waves
+			terrainWaves[0].seed = GenerateWaveSeed();
+			terrainWaves[0].frequency = 1f;
+			terrainWaves[0].amplitude = 2f;
+
+			terrainWaves[1].seed = GenerateWaveSeed();
+			terrainWaves[1].frequency = 0.5f;
+			terrainWaves[1].amplitude = 2f;
+
+			terrainWaves[2].seed = GenerateWaveSeed();
+			terrainWaves[2].frequency = 0.5f;
+			terrainWaves[2].amplitude = 4f;
+		}
+		else
+		{
+			// Seeding stuff
+			terrainWaves[0].seed = 1234f;
+			terrainWaves[0].frequency = 0.5f;
+			terrainWaves[0].amplitude = 2f;
+
+			terrainWaves[1].seed = 1234f;
+			terrainWaves[1].frequency = 0.5f;
+			terrainWaves[1].amplitude = 2f;
+
+			terrainWaves[2].seed = 1234f;
+			terrainWaves[2].frequency = 0.5f;
+			terrainWaves[2].amplitude = 2f;
+		}
+	}
+
+	private Wave[] GenerateGenericWaves(float min, float max)
+	{
+		if (!customGame)
+		{
+			// Create random waves for Trees and Terrain
+			foreach (Wave wave in genericWaves)
+			{
+				wave.seed = GenerateWaveSeed();
+				wave.frequency = GenerateFreqAmp(min, max);
+				wave.amplitude = GenerateFreqAmp(min, max);
+			}
+		}
+		else
+		{
+			// Seeding stuff
+			genericWaves[0].seed = 1234f;
+			genericWaves[0].frequency = 0.5f;
+			genericWaves[0].amplitude = 2f;
+
+			genericWaves[1].seed = 1234f;
+			genericWaves[1].frequency = 0.5f;
+			genericWaves[1].amplitude = 2f;
+
+			genericWaves[2].seed = 1234f;
+			genericWaves[2].frequency = 0.5f;
+			genericWaves[2].amplitude = 2f;
+		}
+
+		return genericWaves;
 	}
 
 	private void SpawnWell()
