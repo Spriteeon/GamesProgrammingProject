@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Custom Timer Class
 public class Timer
 {
     float seconds;

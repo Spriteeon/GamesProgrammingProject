@@ -28,9 +28,6 @@ public class NoiseMapGeneration : MonoBehaviour
 				// Normalize the noise value so that it is within 0 and 1
 				noise /= normalization;
 
-				// Generate noise value using PerlinNoise
-				//float noise = Mathf.PerlinNoise(sampleX, sampleZ);
-
 				noiseMap[z, x] = noise;
 			}
 		}

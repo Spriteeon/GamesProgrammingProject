@@ -24,6 +24,7 @@ public class LightFlicker : MonoBehaviour
         }
     }
 
+    // This Function causes one of the light objects to turn on and off randomly, this ontop of a constant lighting effect causes a candle flicker
     IEnumerator FlickeringLight()
 	{
         isFlickering = true;

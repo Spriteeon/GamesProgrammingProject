@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Item Base Class
 public class Item : MonoBehaviour
 {
 	public float radius = 1f;
@@ -24,6 +25,7 @@ public class Item : MonoBehaviour
 		// This method is Overwritten
 	}
 
+	// This function is called when Item is picked up, moves to a new location on the map so items dont run out
 	public void UpdatePosition()
 	{
 		Vector3 randomPoint = mapCentre;

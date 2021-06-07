@@ -40,73 +40,68 @@ public class FoliageGeneration : MonoBehaviour
 				TileData tileData = levelData.tilesData[tileCoordinate.tileZ, tileCoordinate.tileX];
 				int tileWidth = tileData.heightMap.GetLength(1);
 
-				// get the terrain type of this coordinate
+				// Get the terrain type of this coordinate
 				TerrainType terrainType = tileData.heightTerrainTypes[tileCoordinate.coordinateZ, tileCoordinate.coordinateX];
-				// check if it is a low terrain
-				if (terrainType.name != "lowest") //Use low to clear clearings
-				{
-					float foliageValue = foliageMap[z, x];
+				float foliageValue = foliageMap[z, x];
 
-					// Compares the current foliage noise value to the neighbor ones
-					int neighborZBegin = (int)Mathf.Max(0, z - this.neighborRadius);
-					int neighborZEnd = (int)Mathf.Min(levelDepth - 1, z + this.neighborRadius);
-					int neighborXBegin = (int)Mathf.Max(0, x - this.neighborRadius);
-					int neighborXEnd = (int)Mathf.Min(levelWidth - 1, x + this.neighborRadius);
-					float maxValue = 0f;
-					for (int neighborZ = neighborZBegin; neighborZ <= neighborZEnd; neighborZ++)
+				// Compares the current foliage noise value to the neighbor ones
+				int neighborZBegin = (int)Mathf.Max(0, z - this.neighborRadius);
+				int neighborZEnd = (int)Mathf.Min(levelDepth - 1, z + this.neighborRadius);
+				int neighborXBegin = (int)Mathf.Max(0, x - this.neighborRadius);
+				int neighborXEnd = (int)Mathf.Min(levelWidth - 1, x + this.neighborRadius);
+				float maxValue = 0f;
+				for (int neighborZ = neighborZBegin; neighborZ <= neighborZEnd; neighborZ++)
+				{
+					for (int neighborX = neighborXBegin; neighborX <= neighborXEnd; neighborX++)
 					{
-						for (int neighborX = neighborXBegin; neighborX <= neighborXEnd; neighborX++)
+						float neighborValue = foliageMap[neighborZ, neighborX];
+						if (neighborValue >= maxValue)
 						{
-							float neighborValue = foliageMap[neighborZ, neighborX];
-							if (neighborValue >= maxValue)
-							{
-								maxValue = neighborValue;
-							}
+							maxValue = neighborValue;
 						}
 					}
+				}
 
-					// If the current foliage noise value is the maximum one, place a foliage in this location
-					if (foliageValue == maxValue)
+				// If the current foliage noise value is the maximum one, place a foliage in this location
+				if (foliageValue == maxValue)
+				{
+
+					float xPos = x * distanceBetweenVertices;
+					float zPos = z * distanceBetweenVertices;
+					float yPos = 0f;
+
+					ray.origin = new Vector3(xPos, maxHeight, zPos);
+					ray.direction = Vector3.down;
+					hit = new RaycastHit();
+
+					if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
 					{
+						yPos = hit.point.y - 0.1f;
 
-						float xPos = x * distanceBetweenVertices;
-						float zPos = z * distanceBetweenVertices;
-						float yPos = 0f;
+						Vector3 foliagePosition = new Vector3(xPos, yPos, zPos);
 
-						ray.origin = new Vector3(xPos, maxHeight, zPos);
-						ray.direction = Vector3.down;
-						hit = new RaycastHit();
-
-						if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
+						// Pick a random foliage Prefab
+						int randNum = Random.Range(0, 2);
+						switch (randNum)
 						{
-							yPos = hit.point.y - 0.1f;
-
-							//Vector3 foliagePosition = new Vector3(xPos, meshVertices[vertexIndex].y - 0.1f, zPos);
-							Vector3 foliagePosition = new Vector3(xPos, yPos, zPos);
-
-							// Pick a random tree Prefab
-							int randNum = Random.Range(0, 2);
-							switch (randNum)
-							{
-								case 0:
-									foliagePrefab = foliagePrefab1;
-									break;
-								case 1:
-									foliagePrefab = foliagePrefab2;
-									break;
-								default:
-									break;
-							}
-
-							// Pick a random tree scale
-							float foliageScale = Random.Range(0.05f, 0.2f);
-
-							float yRotation = Random.Range(-180.0f, 180.0f);
-
-							GameObject foliage = Instantiate(this.foliagePrefab, foliagePosition, Quaternion.identity) as GameObject;
-							foliage.transform.localScale = new Vector3(foliageScale, foliageScale, foliageScale);
-							foliage.transform.Rotate(0.0f, yRotation, 0.0f);
+							case 0:
+								foliagePrefab = foliagePrefab1;
+								break;
+							case 1:
+								foliagePrefab = foliagePrefab2;
+								break;
+							default:
+								break;
 						}
+
+						// Pick a random foliage scale
+						float foliageScale = Random.Range(0.05f, 0.2f);
+
+						float yRotation = Random.Range(-180.0f, 180.0f);
+
+						GameObject foliage = Instantiate(this.foliagePrefab, foliagePosition, Quaternion.identity) as GameObject;
+						foliage.transform.localScale = new Vector3(foliageScale, foliageScale, foliageScale);
+						foliage.transform.Rotate(0.0f, yRotation, 0.0f);
 					}
 				}
 			}

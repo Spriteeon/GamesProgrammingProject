@@ -21,7 +21,7 @@ public class BuildingGeneration : MonoBehaviour
 
 	public void GenerateBuildings(int levelDepth, int levelWidth, float distanceBetweenVertices, LevelData levelData, Wave[] waves)
 	{
-		// generate a tree noise map using Perlin Noise
+		// Generate a Building noise map using Perlin Noise
 		float[,] buildingMap = this.noiseMapGeneration.GeneratePerlinNoiseMap(levelDepth, levelWidth, levelScale, 0, 0, waves);
 
 		float levelSizeX = levelWidth * distanceBetweenVertices;
@@ -43,7 +43,7 @@ public class BuildingGeneration : MonoBehaviour
 				{
 					float buildingValue = buildingMap[z, x];
 
-					// Compares the current tree noise value to the neighbor ones
+					// Compares the current Building noise value to the neighbor ones
 					int neighborZBegin = (int)Mathf.Max(0, z - this.neighborRadius);
 					int neighborZEnd = (int)Mathf.Min(levelDepth - 1, z + this.neighborRadius);
 					int neighborXBegin = (int)Mathf.Max(0, x - this.neighborRadius);
@@ -61,7 +61,7 @@ public class BuildingGeneration : MonoBehaviour
 						}
 					}
 
-					// If the current tree noise value is the maximum one, place a tree in this location
+					// If the current Building noise value is the maximum one, place a Building in this location
 					if (buildingValue == maxValue)
 					{
 

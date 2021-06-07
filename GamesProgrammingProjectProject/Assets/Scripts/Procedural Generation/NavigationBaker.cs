@@ -12,6 +12,7 @@ public class NavigationBaker : MonoBehaviour
 	{
         for (int i = 0; i < surfaces.Length; i++)
         {
+            // Builds new NavMesh for any surface I add to surfaces array
             surfaces[i].BuildNavMesh();
         }
     }

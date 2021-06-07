@@ -7,7 +7,8 @@ public class CandleItem : Item
 
 	private float candleValue = 10f;
 
-    public override void Interact()
+	// Gives Player Candle fuel when picked up
+	public override void Interact()
 	{
 		if(player.currentCandle < 100f)
 		{

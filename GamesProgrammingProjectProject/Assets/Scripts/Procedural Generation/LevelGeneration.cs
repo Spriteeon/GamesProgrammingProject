@@ -312,6 +312,7 @@ public class LevelGeneration : MonoBehaviour
 		}
 	}
 
+	// Generic random waves for non custom games
 	private Wave[] GenerateGenericWaves(float min, float max)
 	{
 		// Create random waves for Trees and Terrain
@@ -325,6 +326,7 @@ public class LevelGeneration : MonoBehaviour
 		return genericWaves;
 	}
 
+	// Spawns the Well at a location near to an Enemy patrol point
 	private void SpawnWell()
 	{
 		float distanceFromPoint = 5f;
@@ -339,6 +341,7 @@ public class LevelGeneration : MonoBehaviour
 		ray.direction = Vector3.down;
 		hit = new RaycastHit();
 
+		// If location is not clear, move closer to the centre of the map and check again
 		while(Physics.Raycast(ray, out hit) && hit.transform.tag != "Floor")
 		{
 			distanceFromPoint += 5f;
@@ -349,6 +352,7 @@ public class LevelGeneration : MonoBehaviour
 			hit = new RaycastHit();
 		}
 
+		// Spawn well if floor is clear
 		if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Floor")
 		{
 			float yPos = hit.point.y - 0.5f;
@@ -363,6 +367,7 @@ public class LevelGeneration : MonoBehaviour
 
 	}
 
+	// Generate Enemy patrol points in the playable level
 	private void GeneratePatrolPoints()
 	{
 		for(int i = 0; i < numPatrolPoints; i++)

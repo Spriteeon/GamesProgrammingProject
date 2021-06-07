@@ -89,6 +89,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // Picks a random new patrol point to go towards
     void NewPatrol()
 	{
         int randomPatrolPointIndex = Random.Range(0, patrolPoints.Length);

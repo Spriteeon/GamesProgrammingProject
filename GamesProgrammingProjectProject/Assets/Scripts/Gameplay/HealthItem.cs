@@ -7,6 +7,7 @@ public class HealthItem : Item
 
 	private float healthValue = 10f;
 
+	// Gives Player health when picked up
 	public override void Interact()
 	{
 		if (player.currentHealth < 100f)

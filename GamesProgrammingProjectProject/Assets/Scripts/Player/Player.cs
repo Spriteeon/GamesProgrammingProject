@@ -123,6 +123,7 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene(4);
     }
 
+    // This makes sure the Player is not under the floor when game starts
     public void UpdatePlayerPosition()
     {
         this.gameObject.SetActive(false);
@@ -148,6 +149,7 @@ public class Player : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
+    // Turns Candle on and off
     void SwitchCandle()
 	{
         candle.SetActive(!candle.activeSelf);
@@ -174,6 +176,7 @@ public class Player : MonoBehaviour
         healthBar.SetValue(currentHealth);
     }
 
+    // Decreases candle level if using outside, re-charges it if inside
     void AutoCandle(float value)
 	{
         if (isInside && currentCandle < 100) // Increase Candle

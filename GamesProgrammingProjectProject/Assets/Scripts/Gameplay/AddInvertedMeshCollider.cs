@@ -23,6 +23,7 @@ public class AddInvertedMeshCollider : MonoBehaviour
             DestroyImmediate(colliders[i]);
     }
 
+    // Inverts the mesh of an object, used to create the playable area border
     private void InvertMesh()
     {
         Mesh mesh = GetComponent<MeshFilter>().sharedMesh;

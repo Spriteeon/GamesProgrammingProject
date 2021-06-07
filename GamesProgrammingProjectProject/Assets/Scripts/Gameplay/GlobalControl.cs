@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// This class is attached to an object that is not destroyed between scenes, used to set level parameters from the options menu
 public class GlobalControl : MonoBehaviour
 {
     public static GlobalControl instance;
